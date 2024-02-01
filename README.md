@@ -1,9 +1,8 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-## About Simpan Pinjam
+## About Pembayaran SPP Siswa
 
-Membuat sistem informasi Tata Naskah pada Museum Pusat TNI AU Dirgantara mandala berbasis Web sebagai Tugas Akhir / Skripsi. Judul Skripsi : ANALISA KORELASI PERANGKAT LUNAK TATA NASKAH (TAKAH) BERBASIS WEBSITE PADA MUSEUM PUSAT TNI AU DIRGANTARA MANDALA.
-Apa saja yang akan saya tambahkan disini :
+Membuat aplikasi sistem informasi Pembayaran SPP Siswa 
 
 -   Laravel Breeze
     Laravel Breeze adalah implementasi minimal dan sederhana dari semua fitur autentikasi Laravel, termasuk login, registrasi, pengaturan ulang kata sandi, verifikasi email, dan konfirmasi kata sandi. Selain itu, Breeze menyertakan halaman "profil" sederhana tempat pengguna dapat memperbarui nama, alamat email, dan sandi.
