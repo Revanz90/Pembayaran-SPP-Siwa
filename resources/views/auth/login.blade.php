@@ -22,13 +22,10 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-info">
             <div class="card-header text-center">
-                <a href="../../index2.html" class="h6">Sistem Informasi Simpan Pinjam Pemberdayaan
-                    Kesejahteraan Keluarga (PKK) Kelurahan Kalitirto, Berbah, Sleman</a>
+                <a href="../../index2.html" class="h6">Sistem Informasi Pembayaran SPP Siswa SMK Yapemda 1 Sleman</a>
                 @include('app-layout/alert')
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Log in to start your session</p>
-
                 <form action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
@@ -47,21 +44,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-info btn-block">Log In</button>
-                        </div>
+                    <div class="flex items-center">
+                        <button type="submit" class="btn btn-info btn-block">Log In</button>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-6">
                             <p class="mb-1 mt-1">
                                 <a href="{{ route('password.request') }}" class="text_muted">Forgot Password</a>
@@ -72,7 +59,7 @@
                                 <a href="{{ route('daftar') }}" class="text-center">Register</a>
                             </p> --}}
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>

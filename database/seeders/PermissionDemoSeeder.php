@@ -21,47 +21,47 @@ class PermissionDemoSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'view data_simpanan']);
-        Permission::create(['name' => 'create data_simpanan']);
-        Permission::create(['name' => 'view data_pinjaman']);
-        Permission::create(['name' => 'create data_pinjaman']);
-        Permission::create(['name' => 'view data_angsuran']);
-        Permission::create(['name' => 'create data_angsuran']);
+        Permission::create(['name' => 'view data_siswa']);
+        Permission::create(['name' => 'create data_siswa']);
+        Permission::create(['name' => 'view data_pembayaran_spp']);
+        Permission::create(['name' => 'create data_pembayaran_spp']);
+        // Permission::create(['name' => 'view data_angsuran']);
+        // Permission::create(['name' => 'create data_angsuran']);
 
         //create roles and assign existing permissions
         $adminRole = Role::create(['name' => 'admin']);
-        $adminRole->givePermissionTo('view data_simpanan');
-        $adminRole->givePermissionTo('create data_simpanan');
-        $adminRole->givePermissionTo('view data_pinjaman');
-        $adminRole->givePermissionTo('create data_pinjaman');
-        $adminRole->givePermissionTo('view data_angsuran');
-        $adminRole->givePermissionTo('create data_angsuran');
+        $adminRole->givePermissionTo('view data_siswa');
+        $adminRole->givePermissionTo('create data_siswa');
+        $adminRole->givePermissionTo('view data_pembayaran_spp');
+        $adminRole->givePermissionTo('create data_pembayaran_spp');
+        // $adminRole->givePermissionTo('view data_angsuran');
+        // $adminRole->givePermissionTo('create data_angsuran');
 
-        $ketuaRole = Role::create(['name' => 'ketua']);
-        $ketuaRole->givePermissionTo('view data_simpanan');
-        $ketuaRole->givePermissionTo('create data_simpanan');
-        $ketuaRole->givePermissionTo('view data_pinjaman');
-        $ketuaRole->givePermissionTo('create data_pinjaman');
-        $ketuaRole->givePermissionTo('view data_angsuran');
-        $ketuaRole->givePermissionTo('create data_angsuran');
+        $kepalaSekolahRole = Role::create(['name' => 'kepalaSekolah']);
+        $kepalaSekolahRole->givePermissionTo('view data_siswa');
+        $kepalaSekolahRole->givePermissionTo('create data_siswa');
+        $kepalaSekolahRole->givePermissionTo('view data_pembayaran_spp');
+        $kepalaSekolahRole->givePermissionTo('create data_pembayaran_spp');
+        // $kepalaRole->givePermissionTo('view data_angsuran');
+        // $kepalaRole->givePermissionTo('create data_angsuran');
 
         $bendaharaRole = Role::create(['name' => 'bendahara']);
-        $bendaharaRole->givePermissionTo('view data_simpanan');
-        $bendaharaRole->givePermissionTo('create data_simpanan');
-        $bendaharaRole->givePermissionTo('view data_pinjaman');
-        $bendaharaRole->givePermissionTo('create data_pinjaman');
-        $bendaharaRole->givePermissionTo('view data_angsuran');
-        $bendaharaRole->givePermissionTo('create data_angsuran');
+        $bendaharaRole->givePermissionTo('view data_siswa');
+        $bendaharaRole->givePermissionTo('create data_siswa');
+        $bendaharaRole->givePermissionTo('view data_pembayaran_spp');
+        $bendaharaRole->givePermissionTo('create data_pembayaran_spp');
+        // $bendaharaRole->givePermissionTo('view data_angsuran');
+        // $bendaharaRole->givePermissionTo('create data_angsuran');
 
-        $anggotaRole = Role::create(['name' => 'anggota']);
-        $anggotaRole->givePermissionTo('view data_simpanan');
-        $anggotaRole->givePermissionTo('create data_simpanan');
-        $anggotaRole->givePermissionTo('view data_pinjaman');
-        $anggotaRole->givePermissionTo('create data_pinjaman');
-        $anggotaRole->givePermissionTo('view data_angsuran');
-        $anggotaRole->givePermissionTo('create data_angsuran');
+        $siswaRole = Role::create(['name' => 'siswa']);
+        $siswaRole->givePermissionTo('view data_siswa');
+        $siswaRole->givePermissionTo('create data_siswa');
+        $siswaRole->givePermissionTo('view data_pembayaran_spp');
+        $siswaRole->givePermissionTo('create data_pembayaran_spp');
+        // $anggotaRole->givePermissionTo('view data_angsuran');
+        // $anggotaRole->givePermissionTo('create data_angsuran');
 
-        // create superadmintaud
+        // create superadmin
         $user = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
@@ -69,43 +69,37 @@ class PermissionDemoSeeder extends Seeder
         ]);
         $user->assignRole($adminRole);
 
-        // create kamus
+        // create kepala sekolah
         $user = User::factory()->create([
-            'name' => 'ketua',
-            'email' => 'ketua@gmail.com',
+            'name' => 'kepala sekolah',
+            'email' => 'kepalasekolah@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-        $user->assignRole($ketuaRole);
+        $user->assignRole($kepalaSekolahRole);
 
-        // create admintaud
+        // create bendahara 1
         $user = User::factory()->create([
-            'name' => 'bendahara',
-            'email' => 'bendahara@gmail.com',
+            'name' => 'bendahara 1',
+            'email' => 'bendahara1@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
         $user->assignRole($bendaharaRole);
 
-        // create stafftaud
+        // create bendahara 2
         $user = User::factory()->create([
-            'name' => 'anggota',
-            'email' => 'anggota@gmail.com',
+            'name' => 'bendahara 2',
+            'email' => 'bendahara2@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-        $user->assignRole($anggotaRole);
+        $user->assignRole($bendaharaRole);
 
+        // create 
         $user = User::factory()->create([
-            'name' => 'Rosa Anastasya',
-            'email' => 'rosaanastasya@gmail.com',
+            'name' => 'siswa',
+            'email' => 'siswa@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-        $user->assignRole($anggotaRole);
-
-        $user = User::factory()->create([
-            'name' => 'Jihan Fahira',
-            'email' => 'jihanfahira@gmail.com',
-            'password' => bcrypt('12345678'),
-        ]);
-        $user->assignRole($anggotaRole);
+        $user->assignRole($siswaRole);
 
     }
 }
