@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link">
         <img src="/img/Logo-PKK.png" alt="Logo PKK" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Simpan Pinjam PKK</span>
+        <span class="brand-text font-weight-light">Pembayaran SPP Siswa</span>
     </a>
 
     <!-- Sidebar -->
@@ -35,14 +35,16 @@
                     </a>
                 </li>
                 <li class="nav-header">MAIN MENU</li>
-                <li class="nav-item {{ request()->routeIs('datasimpanan') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-folder-open"></i>
+                @hasrole('admin|kepalaSekolah|bendahara')
+                <li class="nav-item {{ request()->routeIs('datasiswa') ? 'menu-open' : '' }}">
+                    <a href="{{ route('datasiswa') }}" class="nav-link">
+                        <i class="nav-icon far fa-user"></i>
                         <p>
-                            Data Simpanan
+                            Data Siswa
                         </p>
                     </a>
                 </li>
+                @endhasrole
                 <li class="nav-item {{ request()->routeIs('datapinjaman') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-envelope"></i>
@@ -51,7 +53,7 @@
                         </p>
                     </a>
                 </li>
-                {{-- @hasrole('super-admin|admin|kamus') --}}
+                @hasrole('admin|kepalaSekolah|bendahara')
                 <li class="nav-item {{ request()->routeIs('dataangsuran') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-envelope"></i>
@@ -68,7 +70,7 @@
                         </p>
                     </a>
                 </li>
-                {{-- @endhasrole --}}
+                @endhasrole
             </ul>
         </nav>
     </div>

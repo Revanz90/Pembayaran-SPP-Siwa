@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataSiswaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,15 +26,16 @@ Route::get('/', function () {
 
 Route::get('akun', [AkunController::class, 'akun'])->name('akun');
 
-// Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
 
-//     Route::get('/data_simpanan', [SavingController::class, 'index'])->name('datasimpanan');
+    Route::get('/data_siswa', [DataSiswaController::class, 'index'])->name('datasiswa');
+    Route::post('/data_siswa', [DataSiswaController::class, 'create'])->name('create.datasiswa');
 
-//     Route::get('/data_pinjaman', [CreditController::class, 'index'])->name('datapinjaman');
+    // Route::get('/data_pinjaman', [CreditController::class, 'index'])->name('datapinjaman');
 
-//     Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');
+    // Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');
 
-//     Route::get('/data_anggota', [DataAnggotaController::class, 'index'])->name('dataanggota');
-// });
+    // Route::get('/data_anggota', [DataAnggotaController::class, 'index'])->name('dataanggota');
+});
 
 require __DIR__ . '/auth.php';
