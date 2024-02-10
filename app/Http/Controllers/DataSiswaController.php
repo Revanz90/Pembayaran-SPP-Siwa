@@ -12,7 +12,8 @@ class DataSiswaController extends Controller
 {
     public function index()
     {
-        return view('layouts.menu.data_siswa');
+        $siswa = Siswa::all();
+        return view('layouts.menu.data_siswa', ['siswas' => $siswa]);
     }
 
     public function create(Request $request)
@@ -25,6 +26,7 @@ class DataSiswaController extends Controller
             $request->validate([
                 'nisn' => 'required',
                 'nama_siswa' => 'required',
+                'optionKelas' => 'required',
                 'jurusan' => 'required',
                 'alamat_siswa' => 'required',
                 'email_siswa' => 'required|email|unique:users,email',
@@ -45,6 +47,7 @@ class DataSiswaController extends Controller
             Siswa::create([
                 'nisn' => $request->nisn,
                 'nama_lengkap' => $request->nama_siswa,
+                'kelas' => $request->optionKelas,
                 'jurusan' => $request->jurusan,
                 'alamat_siswa' => $request->alamat_siswa,
                 'user_id' => $user->id
