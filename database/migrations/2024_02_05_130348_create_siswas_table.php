@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('nisn');
             $table->string('nama_lengkap');
+            $table->string('kelas');
             $table->string('jurusan');
             $table->string('alamat_siswa');
             $table->unsignedBigInteger('user_id');

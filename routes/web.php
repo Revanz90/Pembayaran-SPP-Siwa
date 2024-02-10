@@ -3,6 +3,8 @@
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataSiswaController;
+use App\Http\Controllers\KartuSPP;
+use App\Http\Controllers\TagihanSPP;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/data_siswa', [DataSiswaController::class, 'index'])->name('datasiswa');
     Route::post('/data_siswa', [DataSiswaController::class, 'create'])->name('create.datasiswa');
 
+    Route::get('/kartu-spp', [KartuSPP::class, 'index'])->name('kartu.spp');
+
+    Route::get('/tagihan-spp', [TagihanSPP::class, 'index'])->name('tagihan.spp');
     // Route::get('/data_pinjaman', [CreditController::class, 'index'])->name('datapinjaman');
 
     // Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');

@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link">
-        <img src="/img/Logo-PKK.png" alt="Logo PKK" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="/img/yapemda1sleman.png" alt="Logo PKK" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Pembayaran SPP Siswa</span>
     </a>
 
@@ -45,28 +45,20 @@
                     </a>
                 </li>
                 @endhasrole
-                <li class="nav-item {{ request()->routeIs('datapinjaman') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-envelope"></i>
+                <li class="nav-item {{ request()->routeIs('kartu.spp') ? 'menu-open' : '' }}">
+                    <a href="{{ route('kartu.spp') }}" class="nav-link">
+                        <i class="nav-icon far fa-credit-card"></i>
                         <p>
-                            Data Pinjaman
+                            Kartu SPP
                         </p>
                     </a>
                 </li>
                 @hasrole('admin|kepalaSekolah|bendahara')
-                <li class="nav-item {{ request()->routeIs('dataangsuran') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-envelope"></i>
+                <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                    <a href="{{ route('tagihan.spp') }}" class="nav-link">
+                        <i class="nav-icon fas fa-hand-holding-usd"></i>
                         <p>
-                            Data Angsuran
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->routeIs('dataanggota') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-user"></i>
-                        <p>
-                            Data Anggota
+                            Tagihan SPP
                         </p>
                     </a>
                 </li>

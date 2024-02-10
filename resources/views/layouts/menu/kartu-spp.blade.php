@@ -1,8 +1,8 @@
 @extends('main')
 
-@section('title', 'Data Siswa')
-@section('title2', 'Data Siswa')
-@section('judul', 'Data Siswa')
+@section('title', 'Kartu SPP')
+@section('title2', 'Kartu SPP')
+@section('judul', 'Kartu SPP')
 
 @section('page-js-files')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 
         <div class="callout callout-warning">
             <i class="fas fa-info-circle"></i>
-            Halaman untuk melihat dan menambah data siswa
+            Halaman untuk menerbitkan Kartu SPP
         </div>
 
         @if ($message = Session::get('success'))
@@ -35,7 +35,7 @@
         <div class="card">
             <!-- Navbar Content -->
             <div class="card-header">
-                <h4 class="card-title font-weight-bold">Data Siswa</h4>
+                <h4 class="card-title font-weight-bold">Kartu SPP</h4>
                 <div class="card-tools">
                     <input type="hidden" name="xnull" id="statusxid[2]" value="2">
                     <div class="project-actions text-center">
@@ -62,7 +62,7 @@
                             <th>Kelas</th>
                             <th>Jurusan</th>
                             <th>Alamat</th>
-                            <!-- <th>Aksi</th> -->
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,14 +73,14 @@
                                 <td>{{ $siswa->kelas }}</td>
                                 <td>{{ $siswa->jurusan }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
-                                <!-- <td>
+                                <td>
                                     <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
                                         href="">
-                                        <i class="fas fa-folder">
+                                        <i class="far fa-credit-card">
                                         </i>
-                                        Lihat
+                                        Terbitkan SPP
                                     </a>
-                                </td> -->
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -94,7 +94,7 @@
         <div class="modal-dialog" style="max-width: 80%">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title font-weight-bold">Data Siswa</h4>
+                    <h4 class="modal-title">Data Siswa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -119,7 +119,7 @@
 
                                                 <div class="form-group row">
                                                     <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-bold">NISN</label>
+                                                        class="col-sm-2 col-form-label font-weight-normal">NISN</label>
                                                     <div class="col-sm-10">
                                                         <input type="number" name="nisn" class="form-control">
                                                     </div>
@@ -127,7 +127,7 @@
 
                                                 <div class="form-group row">
                                                     <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-bold">Nama Lengkap</label>
+                                                        class="col-sm-2 col-form-label font-weight-normal">Nama Lengkap</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" name="nama_siswa" class="form-control">
                                                     </div>
@@ -135,21 +135,7 @@
 
                                                 <div class="form-group row">
                                                     <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-bold">Kelas Siswa
-                                                    </label>
-                                                    <div class="col-sm-10">
-                                                        <input type="radio" id="kelas-x" name="optionKelas" value="X">
-                                                        <label>Kelas X</label><br>
-                                                        <input type="radio" id="kelas-xi" name="optionKelas" value="XI">
-                                                        <label>Kelas XI</label><br>
-                                                        <input type="radio" id="kelas-xii" name="optionKelas" value="XII">
-                                                        <label>Kelas XII</label><br>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-bold">Jurusan Siswa
+                                                        class="col-sm-2 col-form-label font-weight-normal">Jurusan Siswa
                                                     </label>
                                                     <div class="col-sm-10">
                                                         <input type="text" name="jurusan" class="form-control">
@@ -158,7 +144,7 @@
 
                                                 <div class="form-group row">
                                                     <label for="proposal_ProposalTA"
-                                                        class="col-sm-2 col-form-label font-weight-bold">Alamat Siswa</label>
+                                                        class="col-sm-2 col-form-label font-weight-normal">Alamat Siswa</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" name="alamat_siswa" class="form-control"
                                                             required>
@@ -167,7 +153,7 @@
 
                                                 <div class="form-group row">
                                                     <label for="proposal_ProposalTA"
-                                                        class="col-sm-2 col-form-label font-weight-bold">Email Siswa</label>
+                                                        class="col-sm-2 col-form-label font-weight-normal">Email Siswa</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" name="email_siswa" class="form-control"
                                                             required>
@@ -176,7 +162,7 @@
 
                                                 <div class="form-group row">
                                                     <label for="proposal_ProposalTA"
-                                                        class="col-sm-2 col-form-label font-weight-bold">Password</label>
+                                                        class="col-sm-2 col-form-label font-weight-normal">Password</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" name="password" class="form-control"
                                                             required>
