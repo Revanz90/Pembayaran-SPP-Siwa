@@ -12,7 +12,7 @@ class DataSiswaController extends Controller
 {
     public function index()
     {
-        $siswa = Siswa::all();
+        $siswa = Siswa::orderBy('created_at', 'desc')->get();
         return view('layouts.menu.data_siswa', ['siswas' => $siswa]);
     }
 
