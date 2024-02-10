@@ -54,12 +54,23 @@
                         </li>
                     @endhasrole
 
-                @hasrole('admin|kepalaSekolah|bendahara|siswa')
+                @hasrole('siswa')
                     <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
                         <a href="{{ route('tagihan.spp') }}" class="nav-link">
                             <i class="nav-icon fas fa-hand-holding-usd"></i>
                             <p>
                                 Tagihan SPP
+                            </p>
+                        </a>
+                    </li>
+                @endhasrole
+
+                @hasrole('admin|kepalaSekolah|bendahara')
+                    <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cash-register"></i>
+                            <p>
+                                Terima Tagihan SPP
                             </p>
                         </a>
                     </li>

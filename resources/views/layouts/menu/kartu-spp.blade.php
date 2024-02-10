@@ -43,10 +43,10 @@
                             data-bs-toggle="button">
                             <i class="fas fa-print"></i>
                             CETAK</a>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                             <i class="fas fa-plus"></i>
                             TAMBAH
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
@@ -74,12 +74,13 @@
                                 <td>{{ $siswa->jurusan }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
                                 <td>
-                                    <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
-                                        href="">
-                                        <i class="far fa-credit-card">
-                                        </i>
-                                        Terbitkan Tagihan SPP
-                                    </a>
+                                    <form method="POST" action="{{ route('terbitkan.kartu.spp', ['id' => $siswa->id]) }}">
+                                        @csrf
+                                        <button class="btn btn-info btn-xs w-100 border border-secondary">
+                                            <i class="far fa-credit-card"></i>
+                                                Terbitkan Tagihan SPP
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

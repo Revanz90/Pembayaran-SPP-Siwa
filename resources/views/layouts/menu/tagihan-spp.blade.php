@@ -79,30 +79,36 @@
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
+                            <th>Tanggal Transfer</th>
                             <th>Setoran Untuk Bulan</th>
                             <th>Besarnya Rp.</th>
-                            <th>Tanda Tangan Penerima</th>
-                            <!-- <th>Alamat</th> -->
+                            <th>Status Penerima</th>
+                            <th>Aksi</th>
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($kartu)
+                            @foreach ($kartu as $kartuspp)
+                                <tr>
+                                    <td>{{ $kartuspp->tanggal_transfer ?? '' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
+                                    <td>{{ $kartuspp->nilai_setoran ?? '' }}</td>
+                                    <td>{{ strtoupper($kartuspp->status_setoran ?? '') }}</td>
+                                    <td>
+                                        <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
+                                            href="">
+                                            <i class="fas fa-donate"></i>
+                                            Bayar SPP
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
                             <tr>
-                                <td>22 Juli 2023</td>
-                                <td>Juli</td>
-                                <td>110.000</td>
-                                <td>Diterima Bendahara 2</td>
-                                <!-- <td>Jalan Kledokan</td> -->
-                                <!-- <td>
-                                    <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
-                                        href="">
-                                        <i class="far fa-credit-card">
-                                        </i>
-                                        Terbitkan SPP
-                                    </a>
-                                </td> -->
+                                <td colspan="4">No data available</td>
                             </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
