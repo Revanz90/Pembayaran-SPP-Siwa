@@ -41,7 +41,7 @@ class DataSiswaController extends Controller
             ]);
 
             // Sync roles for the user
-            $user->syncRoles($request->roles);
+            $user->assignRole('siswa');
 
             // Create siswa
             Siswa::create([

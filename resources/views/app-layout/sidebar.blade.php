@@ -35,33 +35,34 @@
                     </a>
                 </li>
                 <li class="nav-header">MAIN MENU</li>
-                @hasrole('admin|kepalaSekolah|bendahara')
-                <li class="nav-item {{ request()->routeIs('datasiswa') ? 'menu-open' : '' }}">
-                    <a href="{{ route('datasiswa') }}" class="nav-link">
-                        <i class="nav-icon far fa-user"></i>
-                        <p>
-                            Data Siswa
-                        </p>
-                    </a>
-                </li>
-                @endhasrole
-                <li class="nav-item {{ request()->routeIs('kartu.spp') ? 'menu-open' : '' }}">
-                    <a href="{{ route('kartu.spp') }}" class="nav-link">
-                        <i class="nav-icon far fa-credit-card"></i>
-                        <p>
-                            Kartu SPP
-                        </p>
-                    </a>
-                </li>
-                @hasrole('admin|kepalaSekolah|bendahara')
-                <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
-                    <a href="{{ route('tagihan.spp') }}" class="nav-link">
-                        <i class="nav-icon fas fa-hand-holding-usd"></i>
-                        <p>
-                            Tagihan SPP
-                        </p>
-                    </a>
-                </li>
+                    @hasrole('admin|kepalaSekolah|bendahara')
+                        <li class="nav-item {{ request()->routeIs('datasiswa') ? 'menu-open' : '' }}">
+                            <a href="{{ route('datasiswa') }}" class="nav-link">
+                                <i class="nav-icon far fa-user"></i>
+                                <p>
+                                    Data Siswa
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ request()->routeIs('kartu.spp') ? 'menu-open' : '' }}">
+                            <a href="{{ route('kartu.spp') }}" class="nav-link">
+                                <i class="nav-icon far fa-credit-card"></i>
+                                <p>
+                                    Kartu SPP
+                                </p>
+                            </a>
+                        </li>
+                    @endhasrole
+
+                @hasrole('admin|kepalaSekolah|bendahara|siswa')
+                    <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                        <a href="{{ route('tagihan.spp') }}" class="nav-link">
+                            <i class="nav-icon fas fa-hand-holding-usd"></i>
+                            <p>
+                                Tagihan SPP
+                            </p>
+                        </a>
+                    </li>
                 @endhasrole
             </ul>
         </nav>

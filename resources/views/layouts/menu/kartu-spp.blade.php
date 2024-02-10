@@ -78,7 +78,7 @@
                                         href="">
                                         <i class="far fa-credit-card">
                                         </i>
-                                        Terbitkan SPP
+                                        Terbitkan Tagihan SPP
                                     </a>
                                 </td>
                             </tr>

@@ -29,7 +29,7 @@
 
         <div class="card">
             <!-- Navbar Content -->
-            <div class="card-header items-center">
+            <div class="card-header">
                 <h2 class="card-title font-weight-bold">Kartu Pembayaran SPP</h2>
                 <div class="card-tools">
                     <div class="project-actions text-center">
@@ -49,31 +49,51 @@
             <!-- Page Content -->
             <div class="card-body">
                 <div>
-                    <p>Nama Siswa</p>
-                    <p>Kelas</p>
-                    <p>Alamat</p>
-                    <p>Besarnya SPP</p>
+                    @if($siswa)
+                    <div style="display: grid; grid-template-columns: 1fr 20px 10fr; gap: 10px;">
+                        <div>
+                            <p><strong>Nama Siswa</strong></p>
+                            <p><strong>Kelas</strong></p>
+                            <p><strong>Jurusan</strong></p>
+                            <p><strong>Alamat</strong></p>
+                            <p><strong>Besarnya SPP</strong></p>
+                        </div>
+                        <div>
+                            <p><strong>:</strong></p>
+                            <p><strong>:</strong></p>
+                            <p><strong>:</strong></p>
+                            <p><strong>:</strong></p>
+                            <p><strong>:</strong></p>
+                        </div>
+                        <div>
+                            <p>{{ $siswa->nama_lengkap }}</p>
+                            <p>{{ $siswa->kelas }}</p>
+                            <p>{{ $siswa->jurusan }}</p>
+                            <p>{{ $siswa->alamat_siswa }}</p>
+                            <p>Rp. 110.000</p>
+                        </div>
+                    </div>
+                    @endif
                 </div>
-
 
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>NISN</th>
-                            <th>Nama</th>
-                            <th>Kelas</th>
-                            <th>Jurusan</th>
-                            <th>Alamat</th>
+                            <th>Tanggal</th>
+                            <th>Setoran Untuk Bulan</th>
+                            <th>Besarnya Rp.</th>
+                            <th>Tanda Tangan Penerima</th>
+                            <!-- <th>Alamat</th> -->
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
                             <tr>
-                                <td>001</td>
-                                <td>Jihan</td>
-                                <td>X</td>
-                                <td>Akuntansi</td>
-                                <td>Jalan Kledokan</td>
+                                <td>22 Juli 2023</td>
+                                <td>Juli</td>
+                                <td>110.000</td>
+                                <td>Diterima Bendahara 2</td>
+                                <!-- <td>Jalan Kledokan</td> -->
                                 <!-- <td>
                                     <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
                                         href="">
