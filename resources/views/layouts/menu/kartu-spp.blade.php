@@ -74,13 +74,19 @@
                                 <td>{{ $siswa->jurusan }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
                                 <td>
-                                    <form method="POST" action="{{ route('terbitkan.kartu.spp', ['id' => $siswa->id]) }}">
-                                        @csrf
-                                        <button class="btn btn-info btn-xs w-100 border border-secondary">
-                                            <i class="far fa-credit-card"></i>
+                                    @if ($existingKartuSPPs[$siswa->id])
+                                        <!-- Add a message indicating that the bill has been issued -->
+                                        <span class="text-success">Tagihan SPP Telah Diterbitkan</span>
+                                    @else
+                                        <!-- Display the button to issue the bill -->
+                                        <form method="POST" action="{{ route('terbitkan.kartu.spp', ['id' => $siswa->id]) }}">
+                                            @csrf
+                                            <button class="btn btn-info btn-xs w-100 border border-secondary" >
+                                                <i class="far fa-credit-card"></i>
                                                 Terbitkan Tagihan SPP
-                                        </button>
-                                    </form>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

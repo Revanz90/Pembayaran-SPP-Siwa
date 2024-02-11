@@ -84,11 +84,10 @@
                             <th>Besarnya Rp.</th>
                             <th>Status Penerima</th>
                             <th>Aksi</th>
-                            <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($kartu)
+                        @if($existingKartuSPP)
                             @foreach ($kartu as $kartuspp)
                                 <tr>
                                     <td>{{ $kartuspp->tanggal_transfer ?? '' }}</td>
@@ -96,17 +95,22 @@
                                     <td>{{ $kartuspp->nilai_setoran ?? '' }}</td>
                                     <td>{{ strtoupper($kartuspp->status_setoran ?? '') }}</td>
                                     <td>
-                                        <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
-                                            href="">
+                                        <button type="button" class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" data-toggle="modal" data-target="#modal-default">
                                             <i class="fas fa-donate"></i>
                                             Bayar SPP
-                                        </a>
+                                        </button>
+                                        <!-- <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" href="">
+                                            <i class="fas fa-donate"></i>
+                                            Bayar SPP
+                                        </a> -->
                                     </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="4">No data available</td>
+                                <td class="text-danger" colspan="5">
+                                    Kartu belum diterbitkan
+                                </td>
                             </tr>
                         @endif
                     </tbody>
@@ -115,4 +119,80 @@
         </div>
     </section>
 
+    <!-- Modal pinjaman -->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog" style="max-width: 80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tagihan SPP Siswa</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <section class="content">
+                        <div class="card">
+                            <!-- Navbar Content -->
+                            <div class="card-header ">
+                                <h4 class="card-title font-weight-bold">UPLOAD BUKTI TRANSFER TAGIHAN</h4>
+                                <div class="card-tools"></div>
+                            </div>
+                            <!-- /Navbar Content -->
+
+                            <!-- Page Content -->
+                            <form action="" enctype="multipart/form-data" method="POST" class="form-horizontal" id="dataTransferTagihan">
+                                {{ csrf_field() }}
+                                <div class="card-body">
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <div class="card-body">
+
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-sm-2 col-form-label font-weight-normal">Tanggal Transfer</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" name="tanggal_transfer" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-sm-2 col-form-label font-weight-normal">Nominal</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="nominal" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="proposal_ProposalTA"
+                                                        class="col-sm-2 col-form-label font-weight-normal">Bukti Transfer</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="file" name="bukti_transfer" class="form-control"
+                                                            required>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /Page Content -->
+                        </div>
+                    </section>
+                </div>
+                <!-- /Main Content -->
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <div class="btn-savechange-reset">
+                        <!-- <button type="reset" class="btn btn-sm btn-warning" style="margin-right: 5px">Reset</button> -->
+                        <button type="submit" form="dataTransferTagihan" value="Submit"
+                            class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
 @endsection
