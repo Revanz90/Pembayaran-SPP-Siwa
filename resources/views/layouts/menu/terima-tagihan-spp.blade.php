@@ -1,8 +1,8 @@
 @extends('main')
 
-@section('title', 'Tagihan SPP')
-@section('title2', 'Tagihan SPP')
-@section('judul', 'Tagihan SPP')
+@section('title', 'Terima Pembayaran SPP')
+@section('title2', 'Terima Pembayaran SPP')
+@section('judul', 'Terima Pembayaran SPP')
 
 @section('page-js-files')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -30,19 +30,17 @@
         <div class="card">
             <!-- Navbar Content -->
             <div class="card-header">
-                <h2 class="card-title font-weight-bold">Kartu Pembayaran SPP</h2>
+                <h2 class="card-title font-weight-bold">Terima Pembayaran SPP</h2>
                 <div class="card-tools">
                     <div class="project-actions text-center">
-                        @if($existingKartuSPP)
                             <a href="" class="btn btn-warning" role="button"
                                 data-bs-toggle="button">
                                 <i class="fas fa-print"></i>
                                 CETAK</a>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                                 <i class="fas fa-donate"></i>
                                 Bayar SPP
-                            </button>
-                        @endif
+                            </button> -->
                     </div>
                 </div>
             </div>
@@ -50,33 +48,6 @@
 
             <!-- Page Content -->
             <div class="card-body">
-                <div>
-                    @if($siswa)
-                    <div style="display: grid; grid-template-columns: 1fr 20px 10fr; gap: 10px;">
-                        <div>
-                            <p><strong>Nama Siswa</strong></p>
-                            <p><strong>Kelas</strong></p>
-                            <p><strong>Jurusan</strong></p>
-                            <p><strong>Alamat</strong></p>
-                            <p><strong>Besarnya SPP</strong></p>
-                        </div>
-                        <div>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                        </div>
-                        <div>
-                            <p>{{ $siswa->nama_lengkap }}</p>
-                            <p>{{ $siswa->kelas }}</p>
-                            <p>{{ $siswa->jurusan }}</p>
-                            <p>{{ $siswa->alamat_siswa }}</p>
-                            <p>Rp. 110.000</p>
-                        </div>
-                    </div>
-                    @endif
-                </div>
 
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
@@ -85,32 +56,29 @@
                             <th>Setoran Untuk Bulan</th>
                             <th>Besarnya Rp.</th>
                             <th>Status</th>
-                            <!-- <th>Aksi</th> -->
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if($existingKartuSPP)
-                            @foreach ($kartu as $kartuspp)
+                        @foreach($kartuspp as $kartu)
                                 <tr>
-                                    <td>{{ isset($kartuspp->tanggal_transfer) ? \Carbon\Carbon::parse($kartuspp->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
-                                    <td>{{ $kartuspp->nilai_setoran ?? '' }}</td>
-                                    <td>{{ strtoupper($kartuspp->status_setoran ?? '') }}</td>
-                                    <!-- <td> -->
-                                        <!-- <button type="button" class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" data-toggle="modal" data-target="#modal-default">
-                                            <i class="fas fa-donate"></i>
-                                            Bayar SPP
-                                        </button> -->
-                                    <!-- </td> -->
+                                    <td>{{ isset($kartu->tanggal_transfer) ? \Carbon\Carbon::parse($kartu->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
+                                    <td>{{ $kartu->nilai_setoran ?? '' }}</td>
+                                    <td>{{ strtoupper($kartu->status_setoran ?? '') }}</td>
+                                    <td>
+                                    @if($kartu->status_setoran === 'sudah ditransfer')
+                                        <form method="POST" action="{{ route('terima.spp', ['id' => $kartu->id]) }}">
+                                            @csrf
+                                            <button class="btn btn-info btn-xs w-100 border border-secondary" >
+                                                <i class="fas fa-donate"></i>
+                                                Terima SPP
+                                            </button>
+                                        </form>
+                                    @endif
+                                    </td>
                                 </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="text-danger" colspan="5">
-                                    Kartu belum diterbitkan
-                                </td>
-                            </tr>
-                        @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -118,7 +86,6 @@
     </section>
 
     <!-- Modal pinjaman -->
-    @if($existingKartuSPP)
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog" style="max-width: 80%">
                 <div class="modal-content">
@@ -158,13 +125,9 @@
                                                         <label for="setoran_untuk_bulan" class="col-sm-2 col-form-label font-weight-normal">Setoran untuk Bulan</label>
                                                         <div class="col-sm-10">
                                                             <select name="setoran_untuk_bulan" class="form-control">
-                                                                @foreach($kartu as $item)
-                                                                    @if ($item->status_setoran == 'belum dibayar')
-                                                                        <option value="{{ $item->setoran_untuk_bulan }}">
-                                                                            {{ \Carbon\Carbon::parse($item->setoran_untuk_bulan)->formatLocalized('%B') }}
+                                                                        <option value="Coba">
+                                                                            Coba
                                                                         </option>
-                                                                    @endif
-                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -209,5 +172,4 @@
             </div>
             <!-- /.modal-content -->
         </div>
-    @endif
 @endsection

@@ -74,7 +74,7 @@ class TagihanSPPController extends Controller
                     ->update([
                         'tanggal_transfer' => $tanggal_transfer,
                         'nilai_setoran' => $request->nominal,
-                        'status_setoran' => 'ditransfer',
+                        'status_setoran' => 'sudah ditransfer',
                 ]);
 
                 // Store the data in the database

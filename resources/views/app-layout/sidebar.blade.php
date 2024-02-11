@@ -67,7 +67,7 @@
 
                 @hasrole('admin|kepalaSekolah|bendahara')
                     <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('terima.tagihan.spp') }}" class="nav-link">
                             <i class="nav-icon fas fa-cash-register"></i>
                             <p>
                                 Terima Tagihan SPP
