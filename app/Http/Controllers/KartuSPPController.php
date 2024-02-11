@@ -75,7 +75,6 @@ class KartuSPPController extends Controller
             // Redirect with success message
             return redirect()->back()->with('success', 'Berhasil menerbitkan Kartu SPP.');
         } catch (\Throwable $th) {
-            dd($th);
             // An error occurred, rollback the database transaction
             DB::rollback();
 

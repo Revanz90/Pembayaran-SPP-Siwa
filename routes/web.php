@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/kartu-spp/{id}', [KartuSPPController::class, 'terbitkanKartuSPP'])->name('terbitkan.kartu.spp');
 
     Route::get('/tagihan-spp', [TagihanSPPController::class, 'index'])->name('tagihan.spp');
+    Route::post('/tagihan-spp', [TagihanSPPController::class, 'bayarTagihanSPP'])->name('bayar.tagihan.spp');
     // Route::get('/data_pinjaman', [CreditController::class, 'index'])->name('datapinjaman');
 
     // Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');

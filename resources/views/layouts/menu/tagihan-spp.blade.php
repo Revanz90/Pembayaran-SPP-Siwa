@@ -33,14 +33,16 @@
                 <h2 class="card-title font-weight-bold">Kartu Pembayaran SPP</h2>
                 <div class="card-tools">
                     <div class="project-actions text-center">
-                        <a href="" class="btn btn-warning" role="button"
-                            data-bs-toggle="button">
-                            <i class="fas fa-print"></i>
-                            CETAK</a>
-                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
-                            <i class="fas fa-plus"></i>
-                            TAMBAH
-                        </button> -->
+                        @if($existingKartuSPP)
+                            <a href="" class="btn btn-warning" role="button"
+                                data-bs-toggle="button">
+                                <i class="fas fa-print"></i>
+                                CETAK</a>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                <i class="fas fa-donate"></i>
+                                Bayar SPP
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -83,27 +85,23 @@
                             <th>Setoran Untuk Bulan</th>
                             <th>Besarnya Rp.</th>
                             <th>Status Penerima</th>
-                            <th>Aksi</th>
+                            <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         @if($existingKartuSPP)
                             @foreach ($kartu as $kartuspp)
                                 <tr>
-                                    <td>{{ $kartuspp->tanggal_transfer ?? '' }}</td>
+                                    <td>{{ isset($kartuspp->tanggal_transfer) ? \Carbon\Carbon::parse($kartuspp->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
                                     <td>{{ $kartuspp->nilai_setoran ?? '' }}</td>
                                     <td>{{ strtoupper($kartuspp->status_setoran ?? '') }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" data-toggle="modal" data-target="#modal-default">
+                                    <!-- <td> -->
+                                        <!-- <button type="button" class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" data-toggle="modal" data-target="#modal-default">
                                             <i class="fas fa-donate"></i>
                                             Bayar SPP
-                                        </button>
-                                        <!-- <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" href="">
-                                            <i class="fas fa-donate"></i>
-                                            Bayar SPP
-                                        </a> -->
-                                    </td>
+                                        </button> -->
+                                    <!-- </td> -->
                                 </tr>
                             @endforeach
                         @else
@@ -120,79 +118,92 @@
     </section>
 
     <!-- Modal pinjaman -->
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog" style="max-width: 80%">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Tagihan SPP Siswa</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <section class="content">
-                        <div class="card">
-                            <!-- Navbar Content -->
-                            <div class="card-header ">
-                                <h4 class="card-title font-weight-bold">UPLOAD BUKTI TRANSFER TAGIHAN</h4>
-                                <div class="card-tools"></div>
-                            </div>
-                            <!-- /Navbar Content -->
+    @if($existingKartuSPP)
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog" style="max-width: 80%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Tagihan SPP Siswa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <section class="content">
+                            <div class="card">
+                                <!-- Navbar Content -->
+                                <div class="card-header ">
+                                    <h4 class="card-title font-weight-bold">UPLOAD BUKTI TRANSFER TAGIHAN</h4>
+                                    <div class="card-tools"></div>
+                                </div>
+                                <!-- /Navbar Content -->
 
-                            <!-- Page Content -->
-                            <form action="" enctype="multipart/form-data" method="POST" class="form-horizontal" id="dataTransferTagihan">
-                                {{ csrf_field() }}
-                                <div class="card-body">
-                                    <div class="col-sm-12">
-                                        <div class="card">
-                                            <div class="card-body">
+                                <!-- Page Content -->
+                                <form action="" enctype="multipart/form-data" method="POST" class="form-horizontal" id="dataTransferTagihan">
+                                    {{ csrf_field() }}
+                                    <div class="card-body">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                                <div class="card-body">
 
-                                                <div class="form-group row">
-                                                    <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-normal">Tanggal Transfer</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="date" name="tanggal_transfer" class="form-control">
+                                                    <div class="form-group row">
+                                                        <label for=""
+                                                            class="col-sm-2 col-form-label font-weight-normal">Tanggal Transfer</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="date" name="tanggal_transfer" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group row">
-                                                    <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-normal">Nominal</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" name="nominal" class="form-control">
+                                                    <div class="form-group row">
+                                                        <label for="setoran_untuk_bulan" class="col-sm-2 col-form-label font-weight-normal">Setoran untuk Bulan</label>
+                                                        <div class="col-sm-10">
+                                                            <select name="setoran_untuk_bulan" class="form-control">
+                                                                @foreach($kartu as $item)
+                                                                    <option value="{{ $item->setoran_untuk_bulan }}">{{ \Carbon\Carbon::parse($item->setoran_untuk_bulan)->formatLocalized('%B') }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group row">
-                                                    <label for="proposal_ProposalTA"
-                                                        class="col-sm-2 col-form-label font-weight-normal">Bukti Transfer</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="file" name="bukti_transfer" class="form-control"
-                                                            required>
+                                                    <div class="form-group row">
+                                                        <label for=""
+                                                            class="col-sm-2 col-form-label font-weight-normal">Nominal Transfer</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" name="nominal" class="form-control">
+                                                        </div>
                                                     </div>
-                                                </div>
 
+                                                    <div class="form-group row">
+                                                        <label for="proposal_ProposalTA"
+                                                            class="col-sm-2 col-form-label font-weight-normal">Bukti Transfer</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="file" name="bukti_transfer" class="form-control"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                            <!-- /Page Content -->
-                        </div>
-                    </section>
-                </div>
-                <!-- /Main Content -->
+                                </form>
+                                <!-- /Page Content -->
+                            </div>
+                        </section>
+                    </div>
+                    <!-- /Main Content -->
 
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <div class="btn-savechange-reset">
-                        <!-- <button type="reset" class="btn btn-sm btn-warning" style="margin-right: 5px">Reset</button> -->
-                        <button type="submit" form="dataTransferTagihan" value="Submit"
-                            class="btn btn-primary">Upload</button>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <div class="btn-savechange-reset">
+                            <!-- <button type="reset" class="btn btn-sm btn-warning" style="margin-right: 5px">Reset</button> -->
+                            <button type="submit" form="dataTransferTagihan" value="Submit"
+                                class="btn btn-primary">Upload</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
-    </div>
+    @endif
 @endsection
