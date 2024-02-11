@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kartu_spps', function (Blueprint $table) {
+        Schema::create('spp_payments', function (Blueprint $table) {
             $table->id();
             $table->dateTime('tanggal_transfer')->nullable();
             $table->dateTime('setoran_untuk_bulan');
             $table->integer('nilai_setoran')->nullable();
             $table->unsignedBigInteger('id_siswa');
-            $table->enum('status_setoran', ['belum diterima', 'ditransfer','diterima'])->default('belum diterima');
+            $table->enum('status_setoran', ['ditransfer'])->default('ditransfer');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kartu_spps');
+        Schema::dropIfExists('spp_payments');
     }
 };
