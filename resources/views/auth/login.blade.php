@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Simpan Pinjam | Login</title>
+    <title> Sistem Informasi Pembayaran SPP SMK Yapemda 1 Sleman | Login</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

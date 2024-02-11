@@ -18,7 +18,7 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         $data = [
-            'tittle' => 'Login | Simpan Pinjam',
+            'tittle' => 'Login | Sistem Informasi Pembayaran SPP SMK Yapemda 1 Sleman',
         ];
         return view('auth.login', $data);
     }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simpan Pinjam | Registrasi</title>
+    <title> Sistem Informasi Pembayaran SPP SMK Yapemda 1 Sleman | Registrasi</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -21,7 +21,7 @@
     <div class="register-box">
         <div class="card card-outline card-info">
             <div class="card-header text-center">
-                <a href="" class="h1"> Simpan Pinjam</a>
+                <a href="" class="h1"> Sistem Informasi Pembayaran SPP SMK Yapemda 1 Sleman</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Registrasi Disini!</p>
