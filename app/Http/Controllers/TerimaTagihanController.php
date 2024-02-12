@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\KartuSpp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TerimaTagihanController extends Controller
@@ -21,9 +22,12 @@ class TerimaTagihanController extends Controller
             // Begin a database transaction
             DB::beginTransaction();
 
+            $userID = Auth::id();
+
             KartuSpp::where('id', $id)
                 ->update([
                     'status_setoran' => 'diterima bendahara',
+                    'id_diterima_oleh' => $userID
             ]);
  
             // Commit the database transaction if everything is successful

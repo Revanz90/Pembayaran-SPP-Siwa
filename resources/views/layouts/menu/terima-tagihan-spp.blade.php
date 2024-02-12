@@ -56,6 +56,7 @@
                             <th>Setoran Untuk Bulan</th>
                             <th>Besarnya Rp.</th>
                             <th>Status</th>
+                            <th>Diterima Oleh</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -66,15 +67,18 @@
                                     <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
                                     <td>{{ $kartu->nilai_setoran ?? '' }}</td>
                                     <td>{{ strtoupper($kartu->status_setoran ?? '') }}</td>
+                                    <td>{{ strtoupper($kartu->penerimapembayaranspp ? $kartu->penerimapembayaranspp->name : '') }}</td>
                                     <td>
                                     @if($kartu->status_setoran === 'sudah ditransfer')
-                                        <form method="POST" action="{{ route('terima.spp', ['id' => $kartu->id]) }}">
-                                            @csrf
-                                            <button class="btn btn-info btn-xs w-100 border border-secondary" >
-                                                <i class="fas fa-donate"></i>
-                                                Terima SPP
-                                            </button>
-                                        </form>
+                                        @hasrole('admin|kepalaSekolah|bendahara')
+                                            <form method="POST" action="{{ route('terima.spp', ['id' => $kartu->id]) }}">
+                                                @csrf
+                                                <button class="btn btn-info btn-xs w-100 border border-secondary" >
+                                                    <i class="fas fa-donate"></i>
+                                                    Terima SPP
+                                                </button>
+                                            </form>
+                                        @endhasrole
                                     @endif
                                     </td>
                                 </tr>

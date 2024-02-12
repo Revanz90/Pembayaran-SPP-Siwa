@@ -17,4 +17,9 @@ class KartuSpp extends Model
         'status_setoran',
         // Add other fields as needed
     ];
+
+    public function penerimapembayaranspp()
+    {
+        return $this->belongsTo(User::class, 'id_diterima_oleh');
+    }
 }
