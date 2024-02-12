@@ -85,6 +85,7 @@
                             <th>Setoran Untuk Bulan</th>
                             <th>Besarnya Rp.</th>
                             <th>Status</th>
+                            <th>Diterima Oleh</th>
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
@@ -96,6 +97,7 @@
                                     <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
                                     <td>{{ $kartuspp->nilai_setoran ?? '' }}</td>
                                     <td>{{ strtoupper($kartuspp->status_setoran ?? '') }}</td>
+                                    <td>{{ strtoupper($kartuspp->penerimapembayaranspp ? $kartuspp->penerimapembayaranspp->name : '') }}</td>
                                     <!-- <td> -->
                                         <!-- <button type="button" class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch" data-toggle="modal" data-target="#modal-default">
                                             <i class="fas fa-donate"></i>
