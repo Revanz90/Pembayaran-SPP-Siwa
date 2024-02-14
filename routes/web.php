@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/tagihan-spp', [TagihanSPPController::class, 'bayarTagihanSPP'])->name('bayar.tagihan.spp');
 
     Route::get('/terima-tagihan-spp', [TerimaTagihanController::class, 'index'])->name('terima.tagihan.spp');
+    Route::get('/terima-tagihan-spp/details/{id}', [TerimaTagihanController::class, 'detailBuktiTransferTagihan'])->name('detail.bukti.transfer.atTerimaTagihan');
     Route::post('/terima-tagihan-spp/{id}', [TerimaTagihanController::class, 'terimaSPP'])->name('terima.spp');
     // Route::get('/data_pinjaman', [CreditController::class, 'index'])->name('datapinjaman');
 

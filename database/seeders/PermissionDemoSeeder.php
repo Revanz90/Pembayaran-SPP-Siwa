@@ -45,11 +45,19 @@ class PermissionDemoSeeder extends Seeder
         // $kepalaRole->givePermissionTo('view data_angsuran');
         // $kepalaRole->givePermissionTo('create data_angsuran');
 
-        $bendaharaRole = Role::create(['name' => 'bendahara']);
-        $bendaharaRole->givePermissionTo('view data_siswa');
-        $bendaharaRole->givePermissionTo('create data_siswa');
-        $bendaharaRole->givePermissionTo('view data_pembayaran_spp');
-        $bendaharaRole->givePermissionTo('create data_pembayaran_spp');
+        $bendahara1Role = Role::create(['name' => 'bendahara1']);
+        $bendahara1Role->givePermissionTo('view data_siswa');
+        $bendahara1Role->givePermissionTo('create data_siswa');
+        $bendahara1Role->givePermissionTo('view data_pembayaran_spp');
+        $bendahara1Role->givePermissionTo('create data_pembayaran_spp');
+        // $bendaharaRole->givePermissionTo('view data_angsuran');
+        // $bendaharaRole->givePermissionTo('create data_angsuran');
+
+        $bendahara2Role = Role::create(['name' => 'bendahara2']);
+        $bendahara2Role->givePermissionTo('view data_siswa');
+        $bendahara2Role->givePermissionTo('create data_siswa');
+        $bendahara2Role->givePermissionTo('view data_pembayaran_spp');
+        $bendahara2Role->givePermissionTo('create data_pembayaran_spp');
         // $bendaharaRole->givePermissionTo('view data_angsuran');
         // $bendaharaRole->givePermissionTo('create data_angsuran');
 
@@ -83,7 +91,7 @@ class PermissionDemoSeeder extends Seeder
             'email' => 'bendahara1@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-        $user->assignRole($bendaharaRole);
+        $user->assignRole($bendahara1Role);
 
         // create bendahara 2
         $user = User::factory()->create([
@@ -91,7 +99,7 @@ class PermissionDemoSeeder extends Seeder
             'email' => 'bendahara2@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
-        $user->assignRole($bendaharaRole);
+        $user->assignRole($bendahara2Role);
 
         // create 
         $user = User::factory()->create([

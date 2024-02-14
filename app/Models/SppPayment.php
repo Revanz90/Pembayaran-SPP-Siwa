@@ -12,6 +12,7 @@ class SppPayment extends Model
     protected $fillable = [
         'tanggal_transfer',
         'setoran_untuk_bulan',
+        'id_kartu_spp',
         'nilai_setoran',
         'id_siswa'
         // Add other fields as needed

@@ -83,6 +83,8 @@
                         <tr>
                             <th>Tanggal Transfer</th>
                             <th>Setoran Untuk Bulan</th>
+                            <th>Jatuh Tempo</th>
+                            <th>Keterlambatan SPP</th>
                             <th>Besarnya Rp.</th>
                             <th>Status</th>
                             <th>Diterima Oleh</th>
@@ -95,6 +97,14 @@
                                 <tr>
                                     <td>{{ isset($kartuspp->tanggal_transfer) ? \Carbon\Carbon::parse($kartuspp->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kartuspp->tanggal_jatuh_tempo)->formatLocalized('%d %B') ?? '' }}</td>
+                                    <td>
+                                        @if(isset($kartuspp->jumlah_hari_terlambat) && $kartuspp->jumlah_hari_terlambat >= 0)
+                                            {{ $kartuspp->jumlah_hari_terlambat }} Hari
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>{{ $kartuspp->nilai_setoran ?? '' }}</td>
                                     <td>{{ strtoupper($kartuspp->status_setoran ?? '') }}</td>
                                     <td>{{ strtoupper($kartuspp->penerimapembayaranspp ? $kartuspp->penerimapembayaranspp->name : '') }}</td>
