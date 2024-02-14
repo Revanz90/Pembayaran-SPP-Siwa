@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->dateTime('tanggal_transfer')->nullable();
             $table->dateTime('setoran_untuk_bulan');
+            $table->dateTime('tanggal_jatuh_tempo');
+            $table->integer('jumlah_hari_terlambat')->nullable();
             $table->integer('nilai_setoran')->nullable();
             $table->unsignedBigInteger('id_siswa');
             $table->enum('status_setoran', ['belum dibayar', 'sudah ditransfer', 'diterima bendahara'])->default('belum dibayar');

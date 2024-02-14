@@ -59,8 +59,12 @@ class KartuSPPController extends Controller
 
                 // If a bill doesn't exist, create one
                 if (!$existingKartuSPP) {
+                    // Add payment due date on the 10th of the month
+                    $paymentDueDate = $currentDate->copy()->day(10);
+
                     KartuSpp::create([
                         'setoran_untuk_bulan' => $currentDate->format('Y-m-d'),
+                        'tanggal_jatuh_tempo' => $paymentDueDate->format('Y-m-d'),
                         'id_siswa' => $id,
                     ]);
                 }
@@ -75,6 +79,7 @@ class KartuSPPController extends Controller
             // Redirect with success message
             return redirect()->back()->with('success', 'Berhasil menerbitkan Kartu SPP.');
         } catch (\Throwable $th) {
+            dd($th);
             // An error occurred, rollback the database transaction
             DB::rollback();
 

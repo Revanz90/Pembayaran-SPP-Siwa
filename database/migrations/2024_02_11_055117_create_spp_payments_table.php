@@ -16,6 +16,7 @@ return new class extends Migration
             $table->dateTime('tanggal_transfer')->nullable();
             $table->dateTime('setoran_untuk_bulan');
             $table->integer('nilai_setoran')->nullable();
+            $table->unsignedBigInteger('id_kartu_spp');
             $table->unsignedBigInteger('id_siswa');
             $table->enum('status_setoran', ['ditransfer'])->default('ditransfer');
             $table->timestamps();

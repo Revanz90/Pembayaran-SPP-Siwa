@@ -69,12 +69,23 @@ class TagihanSPPController extends Controller
                 // Convert the date format to match MySQL format
                 $tanggal_transfer = Carbon::parse($request->tanggal_transfer)->toDateString();
 
-                KartuSpp::where('setoran_untuk_bulan', $request->setoran_untuk_bulan)
+                // Fetch the data from the database
+                $kartuSpp = KartuSpp::where('setoran_untuk_bulan', $request->setoran_untuk_bulan)
                     ->where('id_siswa', $siswaID->id)
-                    ->update([
-                        'tanggal_transfer' => $tanggal_transfer,
-                        'nilai_setoran' => $request->nominal,
-                        'status_setoran' => 'sudah ditransfer',
+                    ->first();
+
+                // Calculate the number of days late
+                $dueDate = Carbon::parse($kartuSpp->tanggal_jatuh_tempo);
+                $daysLate = $dueDate->diffInDays($tanggal_transfer, false);
+
+                // Update KartuSPP with the provided data
+                KartuSpp::where('setoran_untuk_bulan', $request->setoran_untuk_bulan)
+                        ->where('id_siswa', $siswaID->id)
+                        ->update([
+                            'tanggal_transfer' => $tanggal_transfer,
+                            'nilai_setoran' => $request->nominal,
+                            'status_setoran' => 'sudah ditransfer',
+                            'jumlah_hari_terlambat' => $daysLate
                 ]);
 
                 // Store the data in the database
@@ -82,6 +93,7 @@ class TagihanSPPController extends Controller
                     'tanggal_transfer' => $tanggal_transfer,
                     'setoran_untuk_bulan' => $request->setoran_untuk_bulan,
                     'nilai_setoran' => $request->nominal,
+                    'id_kartu_spp' => $kartuSpp->id,
                     'id_siswa' => $siswaID->id,
                 ]);
 
@@ -103,6 +115,7 @@ class TagihanSPPController extends Controller
                 return redirect()->back()->with('error', 'Gagal karena File bukti pembayaran tidak ada.');
             }
         } catch (\Exception $e) {
+            dd($e);
             // Rollback the database transaction if an exception occurs
             DB::rollback();
 

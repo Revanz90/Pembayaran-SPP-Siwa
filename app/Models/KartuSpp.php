@@ -12,6 +12,7 @@ class KartuSpp extends Model
     protected $fillable = [
         'tanggal_transfer',
         'setoran_untuk_bulan',
+        'tanggal_jatuh_tempo',
         'nilai_setoran',
         'id_siswa',
         'status_setoran',
