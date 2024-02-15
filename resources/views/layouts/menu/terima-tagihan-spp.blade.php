@@ -105,13 +105,26 @@
                     <section class="content">
                         <div class="card">
                             <!-- Navbar Content -->
-                            <div class="card-header ">
+                            <div class="card-header">
                                 <h4 class="card-title font-weight-bold">TERIMA BUKTI TRANSFER TAGIHAN</h4>
                                 <div class="card-tools">
-                                    <button class="btn btn-info btn-xs w-100 border border-secondary" id="btnTerimaSPP">
-                                        <i class="fas fa-donate"></i>
-                                        Terima SPP
-                                    </button>
+                                    @hasrole('admin|bendahara1')
+                                        <form method="POST" action="{{ route('terima.spp', ['id' => $kartu->id]) }}">
+                                            @csrf
+                                                <button class="btn btn-info btn-md border border-secondary" >
+                                                    <i class="fas fa-donate"></i>
+                                                    Terima SPP
+                                                </button>
+                                        </form>
+                                    <!-- <form id="terima-spp-form" action="{{ route('terima.spp', ['id' => '__id__']) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="id" id="form-id">
+                                        <button type="button" class="btn btn-info btn-md btnTerimaSPP" data-target="#modal-default">
+                                            <i class="fas fa-donate"></i>
+                                            Terima SPP
+                                        </button>
+                                    </form> -->
+                                    @endhasrole
                                 </div>
                             </div>
                             <!-- /Navbar Content -->
