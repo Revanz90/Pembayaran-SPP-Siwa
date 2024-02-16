@@ -76,7 +76,7 @@
                                     <td>
                                     @if($kartu->status_setoran === 'sudah ditransfer')
                                         @hasrole('admin|bendahara1')
-                                            <button type="button" class="btn btn-primary btnTerimaSPP" data-id="{{ $kartu->id }}" data-toggle="modal" data-target="#modal-default">
+                                            <button type="button" class="btn btn-primary btnVerifikasiTerimaSPP" data-id="{{ $kartu->id }}" data-toggle="modal" data-target="#modal-default">
                                                 <i class="fas fa-donate"></i>
                                                 Verifikasi Pembayaran SPP
                                             </button>
@@ -108,23 +108,16 @@
                             <div class="card-header">
                                 <h4 class="card-title font-weight-bold">TERIMA BUKTI TRANSFER TAGIHAN</h4>
                                 <div class="card-tools">
-                                    @hasrole('admin|bendahara1')
-                                        <form method="POST" action="{{ route('terima.spp', ['id' => $kartu->id]) }}">
-                                            @csrf
-                                                <button class="btn btn-info btn-md border border-secondary" >
-                                                    <i class="fas fa-donate"></i>
-                                                    Terima SPP
-                                                </button>
-                                        </form>
-                                    <!-- <form id="terima-spp-form" action="{{ route('terima.spp', ['id' => '__id__']) }}" method="POST">
+                                @hasrole('admin|bendahara1')
+                                    <form id="terima-spp-form" method="POST" action="{{ route('terima.spp', ['id' => '__id__']) }}">
                                         @csrf
                                         <input type="hidden" name="id" id="form-id">
-                                        <button type="button" class="btn btn-info btn-md btnTerimaSPP" data-target="#modal-default">
+                                        <button class="btn btn-info btn-md border border-secondary btnTerimaSPP" data-target="#modal-default">
                                             <i class="fas fa-donate"></i>
                                             Terima SPP
                                         </button>
-                                    </form> -->
-                                    @endhasrole
+                                    </form>
+                                @endhasrole
                                 </div>
                             </div>
                             <!-- /Navbar Content -->
@@ -187,13 +180,15 @@
     </div>
 
     <script>
+        var sppID = null;
         jQuery(document).ready(function($) {
+            // $('#form-id').val(id); // Set the ID value in the hidden input field inside the form
             // Use event delegation to handle click events on dynamically generated buttons
-            $(document).on('click', '.btnTerimaSPP', function () {
-                var id = $(this).data('id');
+            $(document).on('click', '.btnVerifikasiTerimaSPP', function () {
+                sppID = $(this).data('id');
                 $.ajax({
                     type: 'GET',
-                    url: '/terima-tagihan-spp/details/' + id,
+                    url: '/terima-tagihan-spp/details/' + sppID,
                     success: function (response) {
                         // Handle SPP payment details
                         var tanggalTransfer = new Date(response.spp_payment.tanggal_transfer);
@@ -236,6 +231,13 @@
                         console.error(xhr.responseText);
                     }
                 });
+            });
+
+            // Use event delegation to handle click events on dynamically generated buttons
+            $(document).on('click', '.btnTerimaSPP', function () {
+                var formAction = $('#terima-spp-form').attr('action').replace('__id__', sppID); // Replace the placeholder with the actual ID value in the form action
+                $('#terima-spp-form').attr('action', formAction); // Update the form action
+                $('#terima-spp-form').submit(); // Submit the form
             });
 
             // Function to get month name from month number

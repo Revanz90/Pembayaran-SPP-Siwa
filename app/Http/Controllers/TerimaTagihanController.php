@@ -55,13 +55,13 @@ class TerimaTagihanController extends Controller
             DB::commit();
 
             // Redirect with success message
-            return redirect()->back()->with('success', 'Berhasil menerbitkan Kartu SPP.');
+            return redirect()->back()->with('success', 'Pembayaran SPP Diterima.');
         } catch (\Throwable $th) {
             // An error occurred, rollback the database transaction
             DB::rollback();
 
             // Redirect with error message
-            return redirect()->back()->with('error', 'Gagal menerbitkan Kartu SPP.');
+            return redirect()->back()->with('error', 'Terima SPP Gagal.');
         }
     }
 }
