@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TagihanSPPController extends Controller
 {
@@ -98,10 +99,12 @@ class TagihanSPPController extends Controller
                 ]);
 
                 // Store the file and get its path
-                $filePath = $request->file('bukti_transfer')->store('public/filepayment');
+                $directory = 'filepayment';
+                $uploadedFile = $request->file('bukti_transfer');
+                $pathFile = Storage::disk('public')->put($directory, $uploadedFile);
 
                 SppPaymentFile::create([
-                    'bukti_transfer' => $filePath, 
+                    'bukti_transfer' => $pathFile, 
                     'bukti_pembayaran_spp_id' => $buktiPembayaran->id
                 ]);
 
