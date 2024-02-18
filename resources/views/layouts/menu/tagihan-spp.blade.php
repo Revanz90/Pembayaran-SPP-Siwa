@@ -34,10 +34,10 @@
                 <div class="card-tools">
                     <div class="project-actions text-center">
                         @if($existingKartuSPP)
-                            <a href="" class="btn btn-warning" role="button"
+                            <a href="{{ route('cetak.kartu.spp.pdf') }}" class="btn btn-warning" role="button"
                                 data-bs-toggle="button">
                                 <i class="fas fa-print"></i>
-                                CETAK</a>
+                                CETAK KARTU SPP</a>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                                 <i class="fas fa-donate"></i>
                                 Bayar SPP
@@ -52,8 +52,8 @@
             <div class="card-body">
                 <div>
                     @if($siswa)
-                    <div style="display: grid; grid-template-columns: 1fr 20px 10fr; gap: 10px;">
-                        <div>
+                    <div style="display: flex;">
+                        <div style="margin-right: 1rem;">
                             <p><strong>Nama Siswa</strong></p>
                             <p><strong>Kelas</strong></p>
                             <p><strong>Jurusan</strong></p>
@@ -61,18 +61,11 @@
                             <p><strong>Besarnya SPP</strong></p>
                         </div>
                         <div>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                            <p><strong>:</strong></p>
-                        </div>
-                        <div>
-                            <p>{{ $siswa->nama_lengkap }}</p>
-                            <p>{{ $siswa->kelas }}</p>
-                            <p>{{ $siswa->jurusan }}</p>
-                            <p>{{ $siswa->alamat_siswa }}</p>
-                            <p>Rp. 110.000</p>
+                            <p><strong>:</strong> {{ $siswa->nama_lengkap }}</p>
+                            <p><strong>:</strong> {{ $siswa->kelas }}</p>
+                            <p><strong>:</strong> {{ $siswa->jurusan }}</p>
+                            <p><strong>:</strong> {{ $siswa->alamat_siswa }}</p>
+                            <p><strong>:</strong> Rp. 110.000</p>
                         </div>
                     </div>
                     @endif

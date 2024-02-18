@@ -39,10 +39,10 @@
                 <div class="card-tools">
                     <input type="hidden" name="xnull" id="statusxid[2]" value="2">
                     <div class="project-actions text-center">
-                        <a href="" class="btn btn-warning" role="button"
+                        <!-- <a href="" class="btn btn-warning" role="button"
                             data-bs-toggle="button">
                             <i class="fas fa-print"></i>
-                            CETAK</a>
+                            CETAK</a> -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                             <i class="fas fa-plus"></i>
                             TAMBAH

@@ -3,12 +3,9 @@
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataSiswaController;
-use App\Http\Controllers\KartuSPP;
 use App\Http\Controllers\KartuSPPController;
-use App\Http\Controllers\TagihanSPP;
 use App\Http\Controllers\TagihanSPPController;
 use App\Http\Controllers\TerimaTagihanController;
-use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +36,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/kartu-spp', [KartuSPPController::class, 'index'])->name('kartu.spp');
     Route::post('/kartu-spp/{id}', [KartuSPPController::class, 'terbitkanKartuSPP'])->name('terbitkan.kartu.spp');
+    Route::get('/kartu-spp/generate-pdf', [KartuSPPController::class, 'generateKartuPDF'])->name('cetak.kartu.spp.pdf');
 
     Route::get('/tagihan-spp', [TagihanSPPController::class, 'index'])->name('tagihan.spp');
     Route::post('/tagihan-spp', [TagihanSPPController::class, 'bayarTagihanSPP'])->name('bayar.tagihan.spp');
