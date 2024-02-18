@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\KartuSpp;
 use App\Models\Siswa;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +69,6 @@ class KartuSPPController extends Controller
                         'id_siswa' => $id,
                     ]);
                 }
-
                 // Move to the next month
                 $currentDate->addMonth();
             }
@@ -87,5 +87,48 @@ class KartuSPPController extends Controller
             return redirect()->back()->with('error', 'Gagal menerbitkan Kartu SPP.');
         }
         
+    }
+
+    public function generateKartuPDF()
+    {
+        if(Auth::check()){
+            $userID = Auth::id();
+            $siswa = Siswa::where('user_id', $userID)->first();
+
+            $startDate = now()->startOfYear()->addMonths(6);
+            $currentDate = $startDate->copy();
+
+            // Check if a bill for this month already exists for the student
+            $existingKartuSPP = KartuSpp::where('id_siswa', $siswa->id)
+                ->whereMonth('setoran_untuk_bulan', $currentDate->month)
+                ->whereYear('setoran_untuk_bulan', $currentDate->year)
+                ->exists();
+
+            if ($existingKartuSPP) {
+                // If KartuSPP exists, fetch it
+                $kartuspp = KartuSpp::where('id_siswa', $siswa->id)->get();
+            
+                // Optional: Set the paper size and orientation
+                // $pdf->setPaper('A4', 'landscape');
+
+                // Render the view with the student data
+                $pdf = PDF::loadView('pdf.kartu-spp', compact('siswa', 'kartuspp', 'existingKartuSPP'));
+
+                // Return the PDF as a download
+                return $pdf->download('Kartu SPP ' . $siswa->nama_lengkap . '.pdf');
+
+                // return view('pdf.kartu-spp', [
+                //     'siswa' => $siswa,
+                //     'kartuspp' => $kartuspp,
+                //     'existingKartuSPP' => true, // Set existingKartuSPP to true
+                // ]);
+            } else {
+                // If KartuSPP does not exist, return a message or redirect
+                return redirect()->back()->with('error', 'Kartu SPP for the current month does not exist.');
+            }
+        } else {
+            // If the user is not authenticated, return a message or redirect
+            return redirect()->back()->with('error', 'Unauthorized access.');
+        } 
     }
 }
