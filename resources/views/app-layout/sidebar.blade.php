@@ -75,6 +75,17 @@
                         </a>
                     </li>
                 @endhasrole
+
+                @hasrole('admin|kepalaSekolah|bendahara2')
+                    <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                        <a href="{{ route('laporan.spp') }}" class="nav-link">
+                            <i class="nav-icon 	fas fa-book"></i>
+                            <p>
+                                Laporan
+                            </p>
+                        </a>
+                    </li>
+                @endhasrole
             </ul>
         </nav>
     </div>

@@ -23,4 +23,9 @@ class KartuSpp extends Model
     {
         return $this->belongsTo(User::class, 'id_diterima_oleh');
     }
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'id_siswa');
+    }
 }

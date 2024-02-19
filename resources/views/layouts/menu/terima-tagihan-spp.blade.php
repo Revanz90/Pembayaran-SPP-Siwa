@@ -28,10 +28,10 @@
                 <h2 class="card-title font-weight-bold">Terima Pembayaran SPP</h2>
                 <div class="card-tools">
                     <div class="project-actions text-center">
-                            <a href="" class="btn btn-warning" role="button"
+                            <!-- <a href="" class="btn btn-warning" role="button"
                                 data-bs-toggle="button">
                                 <i class="fas fa-print"></i>
-                                CETAK</a>
+                                CETAK</a> -->
                             <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
                                 <i class="fas fa-donate"></i>
                                 Bayar SPP

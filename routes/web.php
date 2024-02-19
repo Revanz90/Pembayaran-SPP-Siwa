@@ -4,6 +4,7 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\KartuSPPController;
+use App\Http\Controllers\LaporanSPPController;
 use App\Http\Controllers\TagihanSPPController;
 use App\Http\Controllers\TerimaTagihanController;
 use Illuminate\Support\Facades\Route;
@@ -44,7 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/terima-tagihan-spp', [TerimaTagihanController::class, 'index'])->name('terima.tagihan.spp');
     Route::get('/terima-tagihan-spp/details/{id}', [TerimaTagihanController::class, 'detailBuktiTransferTagihan'])->name('detail.bukti.transfer.atTerimaTagihan');
     Route::post('/terima-tagihan-spp/{id}', [TerimaTagihanController::class, 'terimaSPP'])->name('terima.spp');
-    // Route::get('/data_pinjaman', [CreditController::class, 'index'])->name('datapinjaman');
+    
+    Route::get('/laporan-spp/{date?}', [LaporanSPPController::class, 'index'])->name('laporan.spp');
 
     // Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');
 
