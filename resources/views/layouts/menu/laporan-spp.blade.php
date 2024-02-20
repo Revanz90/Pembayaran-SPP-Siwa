@@ -27,7 +27,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="card-title font-weight-bold">Laporan SPP</h2>
-                    <div class="input-group w-50">
+                    <div class="input-group w-25">
                         <input type="text" class="form-control" id="date-range" placeholder="Select Date Range">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
@@ -39,7 +39,7 @@
 
             <!-- Page Content -->
             <div class="card-body">
-                <table id="examplePolos" class="table table-bordered table-striped">
+                <table id="kartu-spp-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Nama Siswa</th>
@@ -130,6 +130,7 @@
     </div>
 
     <script>
+        var date = null;
         $(document).ready(function() {
             // Initialize the date range picker
             $('#date-range').daterangepicker({
@@ -139,12 +140,76 @@
                 }
             });
 
+            // Check if there are URL parameters for start_date and end_date
+            const urlParams = new URLSearchParams(window.location.search);
+            const startDateParam = urlParams.get('start_date');
+            const endDateParam = urlParams.get('end_date');
+
+            // If start_date and end_date parameters exist, set the date range picker
+            if (startDateParam && endDateParam) {
+                $('#date-range').on('apply.daterangepicker', function(ev, picker) {
+                    const startDate = moment(startDateParam, 'DD-MM-YYYY');
+                    const endDate = moment(endDateParam, 'DD-MM-YYYY');
+
+                    // Update the input field value with the selected date range
+                    $(this).val(startDate + ' - ' + endDate);
+                });
+            }
+
             // Event handler for when the date range is applied
             $('#date-range').on('apply.daterangepicker', function(ev, picker) {
                 var startDate = picker.startDate.format('DD-MM-YYYY');
                 var endDate = picker.endDate.format('DD-MM-YYYY');
-                // Send startDate and endDate to the controller
-                window.location.href = '/laporan-spp?start_date=' + startDate + '&end_date=' + endDate;
+
+                // Update the input field value with the selected date range
+                $(this).val(startDate + ' - ' + endDate);
+            
+                // Send startDate and endDate to the controller via AJAX
+                $.ajax({
+                    url: '/laporan-spp',
+                    method: 'GET',
+                    data: {
+                        start_date: startDate,
+                        end_date: endDate
+                    },
+                    success: function(response) {
+                        // Handle the response here, such as updating the page with the new data
+                        console.log(response);
+
+                        // Clear existing content
+                        $('#kartu-spp-table tbody').empty();
+
+                        // Iterate over each object in the response array
+                        response.forEach(function(kartuSpp) {
+                            // Extract relevant data from the object
+                            var namaSiswa = kartuSpp.siswa.nama_lengkap;
+                            var kelasSiswa = kartuSpp.siswa.kelas;
+                            var jurusanSiswa = kartuSpp.siswa.jurusan;
+                            var setoranBulan = moment(kartuSpp.setoran_untuk_bulan).format('MMMM YYYY');
+                            var nilaiSetoran = kartuSpp.nilai_setoran;
+                            var statusSetoran = kartuSpp.status_setoran.toUpperCase();
+                            var diterimaOleh = kartuSpp.penerimapembayaranspp.name.toUpperCase();
+
+                            // Create a new table row with the extracted data
+                            var row = '<tr>' +
+                                        '<td>' + namaSiswa + '</td>' +
+                                        '<td>' + kelasSiswa + '</td>' +
+                                        '<td>' + jurusanSiswa + '</td>' +
+                                        '<td>' + setoranBulan + '</td>' +
+                                        '<td>' + nilaiSetoran + '</td>' +
+                                        '<td>' + statusSetoran + '</td>' +
+                                        '<td>' + diterimaOleh + '</td>' +
+                                    '</tr>';
+
+                            // Append the new row to the table body
+                            $('#kartu-spp-table tbody').append(row);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors here
+                        console.error(xhr.responseText);
+                    }
+                });
             });
 
             // Event handler for when the date range is cleared
@@ -153,46 +218,6 @@
                 $(this).val('');
             });
         });
-
-        // var date = null;
-        // jQuery(document).ready(function($) {
-        //     $(document).ready(function() {
-        //         $('#date-range').datepicker({
-        //             format: 'dd-mm-yyyy',
-        //             autoclose: true,
-        //             todayHighlight: true
-        //         }).on('changeDate', function(e) {
-        //             var selectedDate = e.format('dd-mm-yyyy');
-        //             console.log(selectedDate); // This will log the selected date in the console
-        //             date = selectedDate;
-        //             // You can do further processing with the selected date here
-        //         });
-        //     });
-        // });
-
-        // $(document).ready(function() {
-        //     $('#date-range').daterangepicker({
-        //         autoUpdateInput: false,
-        //         locale: {
-        //             cancelLabel: 'Clear'
-        //         }
-        //     });
-
-        //     $('#date-range').on('apply.daterangepicker', function(ev, picker) {
-        //         // $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-        //         var startDate = picker.startDate.format('YYYY-MM-DD');
-        //         var endDate = picker.endDate.format('YYYY-MM-DD');
-        //         date = { start: startDate, end: endDate }; // Store start and end dates in date variable
-        //         $(this).val(startDate + ' - ' + endDate); // Update input field with selected range
-        //         // Perform further processing with the selected date range here
-        //         console.log(date);
-        //     });
-
-        //     $('#date-range').on('cancel.daterangepicker', function(ev, picker) {
-        //         $(this).val('');
-        //         date = null;
-        //     });
-        // });
     </script>
 
     
