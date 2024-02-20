@@ -46,7 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/terima-tagihan-spp/details/{id}', [TerimaTagihanController::class, 'detailBuktiTransferTagihan'])->name('detail.bukti.transfer.atTerimaTagihan');
     Route::post('/terima-tagihan-spp/{id}', [TerimaTagihanController::class, 'terimaSPP'])->name('terima.spp');
     
-    Route::get('/laporan-spp/{date?}', [LaporanSPPController::class, 'index'])->name('laporan.spp');
+    // Route::get('/laporan-spp/{date?}', [LaporanSPPController::class, 'index'])->name('laporan.spp');
+    Route::get('/laporan-spp', [LaporanSPPController::class, 'index'])->name('laporan.spp');
 
     // Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');
 
