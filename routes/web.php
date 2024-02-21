@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     
     // Route::get('/laporan-spp/{date?}', [LaporanSPPController::class, 'index'])->name('laporan.spp');
     Route::get('/laporan-spp', [LaporanSPPController::class, 'index'])->name('laporan.spp');
+    Route::get('/laporan-spp/generate-pdf', [LaporanSPPController::class, 'generateLaporanSPPPDF'])->name('cetak.laporan.spp.pdf');
 
     // Route::get('/data_angsuran', [InstallmentController::class, 'index'])->name('dataangsuran');
 

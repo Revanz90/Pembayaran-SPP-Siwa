@@ -27,11 +27,24 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="card-title font-weight-bold">Laporan SPP</h2>
-                    <div class="input-group w-25">
-                        <input type="text" class="form-control" id="date-range" placeholder="Select Date Range">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    <div class="d-flex justify-content-between">
+                        <div class="input-group w-50">
+                            <input type="text" class="form-control" id="date-range" placeholder="Select Date Range">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </div>
                         </div>
+                        <div>
+                            <!-- Add a link to generate and download the PDF report -->
+                            <!-- <a href="{{ route('cetak.laporan.spp.pdf') }}" class="btn btn-warning" role="button">
+                                <i class="fas fa-print"></i>
+                                CETAK KARTU SPP
+                            </a> -->
+                            <button id="download-laporan-pdf" class="btn btn-warning" role="button">
+                                <i class="fas fa-print"></i>
+                                CETAK KARTU SPP
+                            </button>
+                        </div>                     
                     </div>
                 </div>
             </div>
@@ -216,6 +229,21 @@
             $('#date-range').on('cancel.daterangepicker', function(ev, picker) {
                 // Clear the input field
                 $(this).val('');
+            });
+
+            // Event handler for when the "CETAK KARTU SPP" button is clicked
+            $('#download-laporan-pdf').click(function(e) {
+                e.preventDefault(); // Prevent the default action of the link
+                
+                // Get the start and end dates from the date range picker
+                var startDate = $('#date-range').data('daterangepicker').startDate.format('DD-MM-YYYY');
+                var endDate = $('#date-range').data('daterangepicker').endDate.format('DD-MM-YYYY');
+
+                // Generate the URL with the start and end dates
+                var url = "{{ route('cetak.laporan.spp.pdf') }}?start_date=" + startDate + "&end_date=" + endDate;
+
+                // Redirect the user to the generated URL
+                window.location.href = url;
             });
         });
     </script>
