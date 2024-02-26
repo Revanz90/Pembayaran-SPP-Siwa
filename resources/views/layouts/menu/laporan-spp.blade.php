@@ -42,7 +42,7 @@
                             </a> -->
                             <button id="download-laporan-pdf" class="btn btn-warning" role="button">
                                 <i class="fas fa-print"></i>
-                                CETAK KARTU SPP
+                                CETAK LAPORAN
                             </button>
                         </div>                     
                     </div>
