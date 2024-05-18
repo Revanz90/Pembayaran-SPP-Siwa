@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="nav-header">MAIN MENU</li>
-                    @hasrole('admin|kepalaSekolah|bendahara')
+                    @hasrole('admin|kepalaSekolah|bendahara1')
                         <li class="nav-item {{ request()->routeIs('datasiswa') ? 'menu-open' : '' }}">
                             <a href="{{ route('datasiswa') }}" class="nav-link">
                                 <i class="nav-icon far fa-user"></i>
@@ -48,7 +48,7 @@
                             <a href="{{ route('kartu.spp') }}" class="nav-link">
                                 <i class="nav-icon far fa-credit-card"></i>
                                 <p>
-                                    Kartu SPP
+                                    Tagihan SPP
                                 </p>
                             </a>
                         </li>
