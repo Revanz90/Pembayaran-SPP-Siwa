@@ -74,7 +74,7 @@
                                 <td>{{ $siswa->nisn }}</td>
                                 <td>{{ $siswa->nama_lengkap }}</td>
                                 <td>{{ $siswa->kelas }}</td>
-                                <td>{{ $siswa->jurusan }}</td>
+                                <td>{{ strtoupper($siswa->jurusan) }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
                                 <td>
                                     @if ($existingKartuSPPs[$siswa->id])
