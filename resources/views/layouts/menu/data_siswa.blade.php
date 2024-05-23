@@ -57,21 +57,26 @@
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>NISN</th>
                             <th>Nama</th>
                             <th>Kelas</th>
                             <th>Jurusan</th>
+                            <th>Tahun Masuk</th>
                             <th>Alamat</th>
                             <!-- <th>Aksi</th> -->
                         </tr>
                     </thead>
                     <tbody>
+                        @php $no = 1; @endphp
                         @foreach ($siswas as $siswa)
                             <tr>
+                                <td>{{ $no++ }}</td>
                                 <td>{{ $siswa->nisn }}</td>
                                 <td>{{ $siswa->nama_lengkap }}</td>
                                 <td>{{ $siswa->kelas }}</td>
                                 <td>{{ $siswa->jurusan }}</td>
+                                <td>{{ \Carbon\Carbon::parse($siswa->tahun_masuk)->formatLocalized('%B %Y') }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
                                 <!-- <td>
                                     <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
@@ -89,7 +94,7 @@
         </div>
     </section>
 
-    <!-- Modal pinjaman -->
+    <!-- Modal Siswa -->
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog" style="max-width: 80%">
             <div class="modal-content">
@@ -121,7 +126,7 @@
                                                     <label for=""
                                                         class="col-sm-2 col-form-label font-weight-bold">NISN</label>
                                                     <div class="col-sm-10">
-                                                        <input type="number" name="nisn" class="form-control">
+                                                        <input type="number" name="nisn" class="form-control" id="nisn">
                                                     </div>
                                                 </div>
 
@@ -129,7 +134,7 @@
                                                     <label for=""
                                                         class="col-sm-2 col-form-label font-weight-bold">Nama Lengkap</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="nama_siswa" class="form-control">
+                                                        <input type="text" name="nama_siswa" class="form-control" id="nama_siswa">
                                                     </div>
                                                 </div>
 
@@ -157,6 +162,15 @@
                                                 </div>
 
                                                 <div class="form-group row">
+                                                    <label for=""
+                                                        class="col-sm-2 col-form-label font-weight-bold">Tahun Masuk
+                                                    </label>
+                                                    <div class="col-sm-10">
+                                                        <input type="date" name="tahun masuk" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
                                                     <label for="proposal_ProposalTA"
                                                         class="col-sm-2 col-form-label font-weight-bold">Alamat Siswa</label>
                                                     <div class="col-sm-10">
@@ -169,8 +183,8 @@
                                                     <label for="proposal_ProposalTA"
                                                         class="col-sm-2 col-form-label font-weight-bold">Email Siswa</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="email_siswa" class="form-control"
-                                                            required>
+                                                        <input type="email" name="email_siswa" class="form-control" id="email_siswa" required>
+                                                        <span id="email_feedback" style="color: red; display: none;">Format email tidak valid</span>
                                                     </div>
                                                 </div>
 
@@ -206,5 +220,38 @@
         </div>
         <!-- /.modal-content -->
     </div>
+
+    <script>
+        document.getElementById('nama_siswa').addEventListener('input', function (e) {
+            var input = e.target.value;
+            e.target.value = input.replace(/[^A-Za-z\s]/g, '');
+        });
+
+        document.getElementById('nisn').addEventListener('input', function (e) {
+            var input = e.target.value;
+
+            // Remove non-digit characters and limit to 4 digits
+            if (input.length > 4) {
+                input = input.slice(0, 4);
+            }
+
+            // Update the input value
+            e.target.value = input;
+        });
+
+        document.getElementById('email_siswa').addEventListener('input', function (e) {
+            var input = e.target.value;
+            var feedback = document.getElementById('email_feedback');
+            
+            // Simple email regex pattern
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            
+            if (emailPattern.test(input)) {
+                feedback.style.display = 'none';
+            } else {
+                feedback.style.display = 'inline';
+            }
+        });
+    </script>
 
 @endsection

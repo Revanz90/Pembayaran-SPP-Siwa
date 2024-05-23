@@ -51,18 +51,21 @@ class TagihanSPPController extends Controller
     public function bayarTagihanSPP(Request $request)
     {
         try {
+            // Begin a database transaction
+            DB::beginTransaction();
+
             // Validate the request data
             $request->validate([
-                'tanggal_transfer' => 'required|date',
+                // 'tanggal_transfer' => 'required|date',
                 'setoran_untuk_bulan' => 'required',
                 'nominal' => 'required|numeric',
                 'bukti_transfer' => 'required|file',
             ]);
 
+            $dateNow = Carbon::now();
+
             // Check if a file has been uploaded
             if ($request->hasFile('bukti_transfer')) {
-                // Begin a database transaction
-                DB::beginTransaction();
 
                 $userID = Auth::id();
                 $siswaID = Siswa::where('user_id', $userID)->first();
@@ -83,7 +86,8 @@ class TagihanSPPController extends Controller
                 KartuSpp::where('setoran_untuk_bulan', $request->setoran_untuk_bulan)
                         ->where('id_siswa', $siswaID->id)
                         ->update([
-                            'tanggal_transfer' => $tanggal_transfer,
+                            // 'tanggal_transfer' => $tanggal_transfer,
+                            'tanggal_transfer' => $dateNow,
                             'nilai_setoran' => $request->nominal,
                             'status_setoran' => 'sudah ditransfer',
                             'jumlah_hari_terlambat' => $daysLate
@@ -91,7 +95,8 @@ class TagihanSPPController extends Controller
 
                 // Store the data in the database
                 $buktiPembayaran = SppPayment::create([
-                    'tanggal_transfer' => $tanggal_transfer,
+                    // 'tanggal_transfer' => $tanggal_transfer,
+                    'tanggal_transfer' => $dateNow,
                     'setoran_untuk_bulan' => $request->setoran_untuk_bulan,
                     'nilai_setoran' => $request->nominal,
                     'id_kartu_spp' => $kartuSpp->id,
@@ -118,11 +123,9 @@ class TagihanSPPController extends Controller
                 return redirect()->back()->with('error', 'Gagal karena File bukti pembayaran tidak ada.');
             }
         } catch (\Exception $e) {
-            dd($e);
             // Rollback the database transaction if an exception occurs
             DB::rollback();
 
-            // Log the error or handle it as needed
             // For now, we'll just return an error message
             return redirect()->back()->with('error', 'Failed to store data: ' . $e->getMessage());
         }

@@ -14,6 +14,7 @@ class Siswa extends Model
         'nama_lengkap',
         'kelas',
         'jurusan',
+        'tahun_masuk',
         'alamat_siswa',
         'user_id',
         // Add other fields as needed

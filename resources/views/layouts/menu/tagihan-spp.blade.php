@@ -74,7 +74,7 @@
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Tanggal Transfer</th>
+                            <th>No</th>
                             <th>Setoran Untuk Bulan</th>
                             <th>Jatuh Tempo</th>
                             <th>Keterlambatan SPP</th>
@@ -86,11 +86,13 @@
                     </thead>
                     <tbody>
                         @if($existingKartuSPP)
+                            @php $no = 1; @endphp
                             @foreach ($kartu as $kartuspp)
                                 <tr>
-                                    <td>{{ isset($kartuspp->tanggal_transfer) ? \Carbon\Carbon::parse($kartuspp->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($kartuspp->tanggal_jatuh_tempo)->formatLocalized('%d %B') ?? '' }}</td>
+                                    <td>{{ $no++ }}</td>
+                                    <!-- <td>{{ isset($kartuspp->tanggal_transfer) ? \Carbon\Carbon::parse($kartuspp->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td> -->
+                                    <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B %Y') ?? '' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kartuspp->tanggal_jatuh_tempo)->formatLocalized('%d %B %Y') ?? '' }}</td>
                                     <td>
                                         @if(isset($kartuspp->jumlah_hari_terlambat) && $kartuspp->jumlah_hari_terlambat >= 0)
                                             {{ $kartuspp->jumlah_hari_terlambat }} Hari
@@ -152,21 +154,13 @@
                                                 <div class="card-body">
 
                                                     <div class="form-group row">
-                                                        <label for=""
-                                                            class="col-sm-2 col-form-label font-weight-normal">Tanggal Transfer</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="date" name="tanggal_transfer" class="form-control">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
                                                         <label for="setoran_untuk_bulan" class="col-sm-2 col-form-label font-weight-normal">Setoran untuk Bulan</label>
                                                         <div class="col-sm-10">
                                                             <select name="setoran_untuk_bulan" class="form-control">
                                                                 @foreach($kartu as $item)
                                                                     @if ($item->status_setoran == 'belum dibayar')
                                                                         <option value="{{ $item->setoran_untuk_bulan }}">
-                                                                            {{ \Carbon\Carbon::parse($item->setoran_untuk_bulan)->formatLocalized('%B') }}
+                                                                            {{ \Carbon\Carbon::parse($item->setoran_untuk_bulan)->formatLocalized('%B %Y') }}
                                                                         </option>
                                                                     @endif
                                                                 @endforeach
@@ -178,9 +172,17 @@
                                                         <label for=""
                                                             class="col-sm-2 col-form-label font-weight-normal">Nominal Transfer</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="nominal" class="form-control">
+                                                            <input type="text" name="nominal" class="form-control" id="nominal" maxlength="6">
                                                         </div>
                                                     </div>
+
+                                                    <!-- <div class="form-group row">
+                                                        <label for=""
+                                                            class="col-sm-2 col-form-label font-weight-normal">Tanggal Bukti Transfer</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="date" name="tanggal_transfer" class="form-control">
+                                                        </div>
+                                                    </div> -->
 
                                                     <div class="form-group row">
                                                         <label for="proposal_ProposalTA"
@@ -215,4 +217,21 @@
             <!-- /.modal-content -->
         </div>
     @endif
+
+    <script>
+        document.getElementById('nominal').addEventListener('input', function (e) {
+            var input = e.target.value;
+
+            // Remove any non-digit characters
+            input = input.replace(/\D/g, '');
+
+            // Limit the length to 6 digits
+            if (input.length > 6) {
+                input = input.slice(0, 6);
+            }
+
+            // Update the input value
+            e.target.value = input;
+        });
+    </script>
 @endsection

@@ -28,6 +28,7 @@ class DataSiswaController extends Controller
                 'nama_siswa' => 'required',
                 'optionKelas' => 'required',
                 'jurusan' => 'required',
+                'tahun_masuk' => 'required',
                 'alamat_siswa' => 'required',
                 'email_siswa' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:8'
@@ -49,6 +50,7 @@ class DataSiswaController extends Controller
                 'nama_lengkap' => $request->nama_siswa,
                 'kelas' => $request->optionKelas,
                 'jurusan' => $request->jurusan,
+                'tahun_masuk' => $request->tahun_masuk,
                 'alamat_siswa' => $request->alamat_siswa,
                 'user_id' => $user->id
             ]);
