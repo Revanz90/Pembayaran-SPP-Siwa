@@ -69,7 +69,7 @@
                             <tr>
                                 <td>{{ $kartu->siswa->nama_lengkap }}</td>
                                 <td>{{ $kartu->siswa->kelas }}</td>
-                                <td>{{ $kartu->siswa->jurusan }}</td>
+                                <td>{{ strtoupper($kartu->siswa->jurusan) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
                                 <td>{{ $kartu->nilai_setoran ?? '' }}</td>
                                 <td>{{ strtoupper($kartu->status_setoran ?? '') }}</td>

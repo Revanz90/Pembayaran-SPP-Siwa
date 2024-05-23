@@ -63,7 +63,7 @@
                         <div>
                             <p><strong>:</strong> {{ $siswa->nama_lengkap }}</p>
                             <p><strong>:</strong> {{ $siswa->kelas }}</p>
-                            <p><strong>:</strong> {{ $siswa->jurusan }}</p>
+                            <p><strong>:</strong> {{ strtoupper($siswa->jurusan) }}</p>
                             <p><strong>:</strong> {{ $siswa->alamat_siswa }}</p>
                             <p><strong>:</strong> Rp. 110.000</p>
                         </div>
