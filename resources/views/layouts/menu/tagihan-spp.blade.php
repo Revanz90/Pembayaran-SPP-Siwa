@@ -74,7 +74,7 @@
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <!-- <th>Tanggal Transfer</th> -->
+                            <th>No</th>
                             <th>Setoran Untuk Bulan</th>
                             <th>Jatuh Tempo</th>
                             <th>Keterlambatan SPP</th>
@@ -86,8 +86,10 @@
                     </thead>
                     <tbody>
                         @if($existingKartuSPP)
+                            @php $no = 1; @endphp
                             @foreach ($kartu as $kartuspp)
                                 <tr>
+                                    <td>{{ $no++ }}</td>
                                     <!-- <td>{{ isset($kartuspp->tanggal_transfer) ? \Carbon\Carbon::parse($kartuspp->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td> -->
                                     <td>{{ \Carbon\Carbon::parse($kartuspp->setoran_untuk_bulan)->formatLocalized('%B %Y') ?? '' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kartuspp->tanggal_jatuh_tempo)->formatLocalized('%d %B %Y') ?? '' }}</td>
