@@ -57,6 +57,7 @@
                 <table id="examplePolos" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>NISN</th>
                             <th>Nama</th>
                             <th>Kelas</th>
@@ -66,8 +67,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $no = 1; @endphp
                         @foreach ($siswas as $siswa)
                             <tr>
+                                <td>{{ $no++ }}</td>
                                 <td>{{ $siswa->nisn }}</td>
                                 <td>{{ $siswa->nama_lengkap }}</td>
                                 <td>{{ $siswa->kelas }}</td>

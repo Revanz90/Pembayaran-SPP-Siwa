@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_lengkap');
             $table->string('kelas');
             $table->string('jurusan');
+            $table->dateTime('tahun_masuk');
             $table->string('alamat_siswa');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

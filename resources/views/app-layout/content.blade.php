@@ -15,21 +15,21 @@
 </section>
 
 <div class="row">
+    @hasrole('admin|kepalaSekolah|bendahara1')
     <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-teal">
             <div class="inner">
-                <h3>1</h3>
+                <!-- <h3>1</h3> -->
                 <p>Data Siswa</p>
             </div>
             <div class="icon">
-                <i class="ion ion-person-stalker"></i>
+                <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">Lihat Siswa <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('datasiswa') }}" class="small-box-footer">Lihat Siswa <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <div class="col-lg-3 col-6">
-        <!-- small box -->
+    <!-- <div class="col-lg-3 col-6">
         <div class="small-box bg-info">
             <div class="inner">
                 <h3>2</h3>
@@ -40,17 +40,17 @@
             </div>
             <a href="#" class="small-box-footer">Lihat Kartu <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-    </div>
+    </div> -->
     <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>3</h3>
+                <!-- <h3>3</h3> -->
                 <p>Tagihan SPP</p>
             </div>
             <div class="icon">
-                <i class=" ion ion-email-unread"></i>
+                <i class="ion ion-card"></i>
             </div>
-            <a href="#" class="small-box-footer">Lihat Tagihan <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route('kartu.spp') }}" class="small-box-footer">Lihat Tagihan <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- <div class="col-lg-3 col-6"> -->
@@ -66,6 +66,7 @@
             <a href="#" class="small-box-footer">Lihat Info <i class="fas fa-arrow-circle-right"></i></a>
         </div> -->
     <!-- </div> -->
+    @endhasrole
 </div>
 
 <section class="col-lg-12">
