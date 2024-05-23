@@ -16,7 +16,8 @@ return new class extends Migration
             $table->integer('nisn');
             $table->string('nama_lengkap');
             $table->string('kelas');
-            $table->string('jurusan');
+            $table->enum('status_setoran', ['belum dibayar', 'sudah ditransfer', 'diterima bendahara'])->default('belum dibayar');
+            $table->enum('jurusan', ['akuntasi', 'keperawatan', 'bisnis dan pemasaran']);
             $table->dateTime('tahun_masuk');
             $table->string('alamat_siswa');
             $table->unsignedBigInteger('user_id');

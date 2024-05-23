@@ -27,7 +27,7 @@ class DataSiswaController extends Controller
                 'nisn' => 'required',
                 'nama_siswa' => 'required',
                 'optionKelas' => 'required',
-                'jurusan' => 'required',
+                'optionJurusan' => 'required',
                 'tahun_masuk' => 'required',
                 'alamat_siswa' => 'required',
                 'email_siswa' => 'required|email|unique:users,email',
@@ -49,7 +49,7 @@ class DataSiswaController extends Controller
                 'nisn' => $request->nisn,
                 'nama_lengkap' => $request->nama_siswa,
                 'kelas' => $request->optionKelas,
-                'jurusan' => $request->jurusan,
+                'jurusan' => $request->optionJurusan,
                 'tahun_masuk' => $request->tahun_masuk,
                 'alamat_siswa' => $request->alamat_siswa,
                 'user_id' => $user->id

@@ -75,7 +75,7 @@
                                 <td>{{ $siswa->nisn }}</td>
                                 <td>{{ $siswa->nama_lengkap }}</td>
                                 <td>{{ $siswa->kelas }}</td>
-                                <td>{{ $siswa->jurusan }}</td>
+                                <td>{{ strtoupper($siswa->jurusan) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($siswa->tahun_masuk)->formatLocalized('%B %Y') }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
                                 <!-- <td>
@@ -153,11 +153,13 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label for=""
-                                                        class="col-sm-2 col-form-label font-weight-bold">Jurusan Siswa
-                                                    </label>
+                                                    <label for="jurusan" class="col-sm-2 col-form-label font-weight-bold">Jurusan Siswa</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="jurusan" class="form-control">
+                                                        <select name="optionJurusan" id="jurusan" class="form-control">
+                                                            <option value="akuntasi">Akuntansi</option>
+                                                            <option value="keperawatan">Keperawatan</option>
+                                                            <option value="bisnis dan pemasaran">Bisnis Dan Pemasaran</option>
+                                                        </select>
                                                     </div>
                                                 </div>
 
