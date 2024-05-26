@@ -48,7 +48,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Tanggal Transfer</th>
+                            <!-- <th>Tanggal Transfer</th> -->
                             <th>Setoran Untuk Bulan</th>
                             <th>Jatuh Tempo</th>
                             <th>Keterlambatan SPP</th>
@@ -63,9 +63,9 @@
                         @foreach($kartuspp as $kartu)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ isset($kartu->tanggal_transfer) ? \Carbon\Carbon::parse($kartu->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($kartu->tanggal_jatuh_tempo)->formatLocalized('%d %B') ?? '' }}</td>
+                                    <!-- <td>{{ isset($kartu->tanggal_transfer) ? \Carbon\Carbon::parse($kartu->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td> -->
+                                    <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%d %B %Y') ?? '' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($kartu->tanggal_jatuh_tempo)->formatLocalized('%d %B %Y') ?? '' }}</td>
                                     <td>
                                         @if(isset($kartu->jumlah_hari_terlambat) && $kartu->jumlah_hari_terlambat >= 0)
                                             {{ $kartu->jumlah_hari_terlambat }} Hari
@@ -131,12 +131,12 @@
                                     <div class="card">
                                         <div class="card-body">
 
-                                            <div class="form-group row">
+                                            <!-- <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label font-weight-normal">Tanggal Transfer</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" name="tanggal_transfer" id="tanggal_transfer" class="form-control" value="" readonly>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label font-weight-normal">Setoran untuk Bulan</label>
@@ -198,8 +198,12 @@
                         var formattedTanggalTransfer = tanggalTransfer.getDate() + ' ' + getMonthName(tanggalTransfer.getMonth()) + ' ' + tanggalTransfer.getFullYear();
                         $('#tanggal_transfer').val(formattedTanggalTransfer);
 
+                        // Membuat format tanggal setoran_untuk_bulan
                         var setoran_bulan = new Date(response.spp_payment.setoran_untuk_bulan);
-                        var formattedPeriodPayment = getMonthName(tanggalTransfer.getMonth());
+                        var dayName = String(setoran_bulan.getDate()).padStart(2, '0'); // Mengubah tanggal menjadi 2 digit
+                        var monthName = getMonthName(setoran_bulan.getMonth());
+                        var year = setoran_bulan.getFullYear();
+                        var formattedPeriodPayment = `${dayName} ${monthName} ${year}`;
                         $('#setoran_untuk_bulan').val(formattedPeriodPayment);
 
                         // Other code remains unchanged
@@ -245,7 +249,7 @@
 
             // Function to get month name from month number
             function getMonthName(monthNumber) {
-                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                 return months[monthNumber];
             }
         });

@@ -54,38 +54,39 @@
                         </li>
                     @endhasrole
 
-                @hasrole('siswa')
-                    <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
-                        <a href="{{ route('tagihan.spp') }}" class="nav-link">
-                            <i class="nav-icon fas fa-hand-holding-usd"></i>
-                            <p>
-                                Tagihan SPP
-                            </p>
-                        </a>
-                    </li>
-                @endhasrole
+                    @hasrole('siswa')
+                        <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                            <a href="{{ route('tagihan.spp') }}" class="nav-link">
+                                <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                <p>
+                                    Tagihan SPP
+                                </p>
+                            </a>
+                        </li>
+                    @endhasrole
 
-                @hasrole('admin|kepalaSekolah|bendahara1|bendahara2')
-                    <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
-                        <a href="{{ route('terima.tagihan.spp') }}" class="nav-link">
-                            <i class="nav-icon fas fa-cash-register"></i>
-                            <p>
-                                Terima Tagihan SPP
-                            </p>
-                        </a>
-                    </li>
-                @endhasrole
+                    @hasrole('admin|kepalaSekolah|bendahara1|bendahara2')
+                        <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                            <a href="{{ route('terima.tagihan.spp') }}" class="nav-link">
+                                <i class="nav-icon fas fa-cash-register"></i>
+                                <p>
+                                    Terima Tagihan SPP
+                                </p>
+                            </a>
+                        </li>
+                    @endhasrole
 
-                @hasrole('admin|kepalaSekolah|bendahara1|bendahara2')
-                    <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
-                        <a href="{{ route('laporan.spp') }}" class="nav-link">
-                            <i class="nav-icon 	fas fa-book"></i>
-                            <p>
-                                Laporan
-                            </p>
-                        </a>
-                    </li>
-                @endhasrole
+                    @hasrole('admin|kepalaSekolah|bendahara1|bendahara2')
+                    <h1 class="nav-header">Laporan</li>
+                        <li class="nav-item {{ request()->routeIs('tagihan.spp') ? 'menu-open' : '' }}">
+                            <a href="{{ route('laporan.spp') }}" class="nav-link">
+                                <i class="nav-icon 	fas fa-book"></i>
+                                <p>
+                                    Laporan
+                                </p>
+                            </a>
+                        </li>
+                    @endhasrole
             </ul>
         </nav>
     </div>
