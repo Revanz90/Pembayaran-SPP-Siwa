@@ -7,36 +7,51 @@ use App\Models\KartuSpp;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LaporanSPPController extends Controller
 {
     public function index(Request $request) {
-        // Get start and end dates from the request
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-    
-        // If start and end dates are provided, fetch records for that date range
-        if ($startDate && $endDate) {
-            // Convert the date strings to Carbon instances
-            $startDate = Carbon::parse($startDate)->startOfDay();
-            $endDate = Carbon::parse($endDate)->endOfDay();
-    
-            $kartuSpps = KartuSpp::with('siswa', 'penerimapembayaranspp')
-                ->where('status_setoran', 'diterima bendahara')
-                ->whereBetween('setoran_untuk_bulan', [$startDate, $endDate])
-                ->get();
-            
-            if ($request->ajax()) {
-                return response()->json($kartuSpps);
-            } else {
-                return view('layouts.menu.laporan-spp', ['kartuSpps' => $kartuSpps]);
-            }
+        // Initialize the query
+        $query = KartuSpp::with('siswa', 'penerimapembayaranspp');
+
+        // Apply date range filter if provided
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $startDate = Carbon::parse($request->input('start_date'))->startOfDay();
+            $endDate = Carbon::parse($request->input('end_date'))->endOfDay();
+            $query->whereBetween('setoran_untuk_bulan', [$startDate, $endDate]);
+        }
+
+        // Apply jurusan filter if provided
+        if ($request->filled('jurusan')) {
+            $jurusan = $request->input('jurusan');
+            $query->whereHas('siswa', function ($q) use ($jurusan) {
+                $q->where('jurusan', $jurusan);
+            });
+        }
+
+        // Apply kelas filter if provided
+        if ($request->filled('kelas')) {
+            $kelas = $request->input('kelas');
+            $query->whereHas('siswa', function ($q) use ($kelas) {
+                $q->where('kelas', $kelas);
+            });
+        }
+
+        // Apply status filter if provided
+        if ($request->filled('status')) {
+            $status = $request->input('status');
+            $query->where('status_setoran', $status);
+        }
+
+        // Get the filtered results
+        $kartuSpps = $query->get();
+
+        // Return JSON response for AJAX requests
+        if ($request->ajax()) {
+            return response()->json($kartuSpps);
         } else {
-            // If no date range provided, fetch all records
-            $kartuSpps = KartuSpp::with('siswa')
-                ->where('status_setoran', 'diterima bendahara')
-                ->get();
-            
+            // Return view for non-AJAX requests
             return view('layouts.menu.laporan-spp', ['kartuSpps' => $kartuSpps]);
         }
     }

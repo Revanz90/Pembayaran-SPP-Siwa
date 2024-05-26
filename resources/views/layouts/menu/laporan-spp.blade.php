@@ -26,25 +26,50 @@
             <!-- Navbar Content -->
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2 class="card-title font-weight-bold">Laporan SPP</h2>
-                    <div class="d-flex justify-content-between">
-                        <div class="input-group w-50">
-                            <input type="text" class="form-control" id="date-range" placeholder="Select Date Range">
+                    <h2 class="card-title font-weight-bold">Filter Laporan</h2>
+                    <div class="d-flex justify-content-end">
+                        <div class="w-50 mr-1">
+                            <select name="optionJurusan" id="jurusan" class="form-control">
+                                <option value="">-Jurusan-</option>
+                                <option value="akuntasi">Akuntansi</option>
+                                <option value="keperawatan">Keperawatan</option>
+                                <option value="bisnis dan pemasaran">Bisnis Dan Pemasaran</option>
+                            </select>
+                        </div>
+
+                        <div class="w-50 mr-1">
+                            <select name="optionKelasSiswa" id="kelasSiswa" class="form-control">
+                                <option value=""> -Kelas- </option>
+                                <option value="x">Kelas X</option>
+                                <option value="xi">Kelas XI</option>
+                                <option value="xii">Kelas XII</option>
+                            </select>
+                        </div>
+
+                        <div class="w-50 mr-1">
+                            <select name="statusPembayaran" id="statusPembayaran" class="form-control">
+                                <option value=""> -Status- </option>
+                                <option value="belum dibayar">Belum Dibayar</option>
+                                <option value="sudah ditransfer">Sudah Transfer</option>
+                                <option value="diterima bendahara">Diterima bendahara</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mr-1">
+                            <input type="text" class="form-control" id="date-range" placeholder="Pilih Rentang Tanggal">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                             </div>
                         </div>
-                        <div>
-                            <!-- Add a link to generate and download the PDF report -->
-                            <!-- <a href="{{ route('cetak.laporan.spp.pdf') }}" class="btn btn-warning" role="button">
-                                <i class="fas fa-print"></i>
-                                CETAK KARTU SPP
-                            </a> -->
+
+                        <div class="input-group d-flex justify-content-end">
                             <button id="download-laporan-pdf" class="btn btn-warning" role="button">
-                                <i class="fas fa-print"></i>
                                 CETAK LAPORAN
                             </button>
-                        </div>                     
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-print"></i></span>
+                            </div>
+                        </div>                   
                     </div>
                 </div>
             </div>
@@ -55,24 +80,27 @@
                 <table id="kartu-spp-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Siswa</th>
                             <th>Kelas</th>
                             <th>Jurusan</th>
                             <th>Setoran Untuk Bulan</th>
                             <th>Nominal</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th> -->
                             <th>Diterima Oleh</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @php $no = 1; @endphp
                         @foreach($kartuSpps as $kartu)
                             <tr>
+                                <td>{{ $no++ }}</td>
                                 <td>{{ $kartu->siswa->nama_lengkap }}</td>
                                 <td>{{ $kartu->siswa->kelas }}</td>
                                 <td>{{ strtoupper($kartu->siswa->jurusan) }}</td>
-                                <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%B') ?? '' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%B %Y') ?? '' }}</td>
                                 <td>{{ $kartu->nilai_setoran ?? '' }}</td>
-                                <td>{{ strtoupper($kartu->status_setoran ?? '') }}</td>
+                                <!-- <td>{{ strtoupper($kartu->status_setoran ?? '') }}</td> -->
                                 <td>{{ strtoupper($kartu->penerimapembayaranspp ? $kartu->penerimapembayaranspp->name : '') }}</td>
                             </tr>
                         @endforeach
@@ -153,38 +181,45 @@
                 }
             });
 
-            // Check if there are URL parameters for start_date and end_date
-            const urlParams = new URLSearchParams(window.location.search);
-            const startDateParam = urlParams.get('start_date');
-            const endDateParam = urlParams.get('end_date');
-
-            // If start_date and end_date parameters exist, set the date range picker
-            if (startDateParam && endDateParam) {
-                $('#date-range').on('apply.daterangepicker', function(ev, picker) {
-                    const startDate = moment(startDateParam, 'DD-MM-YYYY');
-                    const endDate = moment(endDateParam, 'DD-MM-YYYY');
-
-                    // Update the input field value with the selected date range
-                    $(this).val(startDate + ' - ' + endDate);
-                });
-            }
-
             // Event handler for when the date range is applied
             $('#date-range').on('apply.daterangepicker', function(ev, picker) {
-                var startDate = picker.startDate.format('DD-MM-YYYY');
-                var endDate = picker.endDate.format('DD-MM-YYYY');
+                $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                fetchFilteredData();
+            });
 
-                // Update the input field value with the selected date range
-                $(this).val(startDate + ' - ' + endDate);
-            
-                // Send startDate and endDate to the controller via AJAX
+            // Event handler for when the date range is cleared
+            $('#date-range').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                fetchFilteredData();
+            });
+
+            // Event handlers for the select dropdowns
+            $('#jurusan, #kelasSiswa, #statusPembayaran').change(function() {
+                fetchFilteredData();
+            });
+
+            function fetchFilteredData(){
+                var dateRange = $('#date-range').val().split(' - ');
+                var startDate = dateRange[0] ? moment(dateRange[0], 'DD-MM-YYYY').format('YYYY-MM-DD') : null;
+                var endDate = dateRange[1] ? moment(dateRange[1], 'DD-MM-YYYY').format('YYYY-MM-DD') : null;
+                var jurusan = $('#jurusan').val();
+                var kelasSiswa = $('#kelasSiswa').val();
+                var statusPembayaran = $('#statusPembayaran').val();
+
+                // Prepare data object
+                var data = {};
+
+                if (startDate) data.start_date = startDate;
+                if (endDate) data.end_date = endDate;
+                if (jurusan) data.jurusan = jurusan;
+                if (kelasSiswa) data.kelas = kelasSiswa;
+                if (statusPembayaran) data.status = statusPembayaran;
+
+                // Send the data to the controller via AJAX
                 $.ajax({
                     url: '/laporan-spp',
                     method: 'GET',
-                    data: {
-                        start_date: startDate,
-                        end_date: endDate
-                    },
+                    data: data,
                     success: function(response) {
                         // Handle the response here, such as updating the page with the new data
                         console.log(response);
@@ -192,30 +227,37 @@
                         // Clear existing content
                         $('#kartu-spp-table tbody').empty();
 
+                        // Initialize a counter for row numbers
+                        var counter = 1;
+
                         // Iterate over each object in the response array
                         response.forEach(function(kartuSpp) {
                             // Extract relevant data from the object
-                            var namaSiswa = kartuSpp.siswa.nama_lengkap;
-                            var kelasSiswa = kartuSpp.siswa.kelas;
-                            var jurusanSiswa = kartuSpp.siswa.jurusan;
-                            var setoranBulan = moment(kartuSpp.setoran_untuk_bulan).format('MMMM YYYY');
-                            var nilaiSetoran = kartuSpp.nilai_setoran;
-                            var statusSetoran = kartuSpp.status_setoran.toUpperCase();
-                            var diterimaOleh = kartuSpp.penerimapembayaranspp.name.toUpperCase();
+                            var namaSiswa = kartuSpp.siswa ? kartuSpp.siswa.nama_lengkap || '' : '';
+                            var kelasSiswa = kartuSpp.siswa ? kartuSpp.siswa.kelas || '' : '';
+                            var jurusanSiswa = kartuSpp.siswa ? kartuSpp.siswa.jurusan || '' : '';
+                            var setoranBulan = kartuSpp.setoran_untuk_bulan ? moment(kartuSpp.setoran_untuk_bulan).format('MMMM YYYY') : '';
+                            var nilaiSetoran = kartuSpp.nilai_setoran || '';
+                            // var statusSetoran = kartuSpp.status_setoran.toUpperCase();
+                            var diterimaOleh = kartuSpp.penerimapembayaranspp ? kartuSpp.penerimapembayaranspp.name.toUpperCase() || '' : '';
 
                             // Create a new table row with the extracted data
                             var row = '<tr>' +
-                                        '<td>' + namaSiswa + '</td>' +
-                                        '<td>' + kelasSiswa + '</td>' +
-                                        '<td>' + jurusanSiswa + '</td>' +
-                                        '<td>' + setoranBulan + '</td>' +
-                                        '<td>' + nilaiSetoran + '</td>' +
-                                        '<td>' + statusSetoran + '</td>' +
-                                        '<td>' + diterimaOleh + '</td>' +
-                                    '</tr>';
+                                    '<td>' + (counter || '') + '</td>' +
+                                    '<td>' + (namaSiswa || '') + '</td>' +
+                                    '<td>' + (kelasSiswa || '') + '</td>' +
+                                    '<td>' + (jurusanSiswa || '') + '</td>' +
+                                    '<td>' + (setoranBulan || '') + '</td>' +
+                                    '<td>' + (nilaiSetoran || '') + '</td>' +
+                                    // '<td>' + (statusSetoran || '') + '</td>' +
+                                    '<td>' + (diterimaOleh || '') + '</td>' +
+                                '</tr>';
 
                             // Append the new row to the table body
                             $('#kartu-spp-table tbody').append(row);
+
+                            // Increment the counter
+                            counter++;
                         });
                     },
                     error: function(xhr, status, error) {
@@ -223,13 +265,7 @@
                         console.error(xhr.responseText);
                     }
                 });
-            });
-
-            // Event handler for when the date range is cleared
-            $('#date-range').on('cancel.daterangepicker', function(ev, picker) {
-                // Clear the input field
-                $(this).val('');
-            });
+            }
 
             // Event handler for when the "CETAK KARTU SPP" button is clicked
             $('#download-laporan-pdf').click(function(e) {
@@ -247,8 +283,7 @@
             });
         });
     </script>
-
-    
+  
     <style>
         /* Override default styles for Bootstrap Datepicker */
         .datepicker-dropdown.show {

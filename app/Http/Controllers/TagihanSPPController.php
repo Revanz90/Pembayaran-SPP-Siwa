@@ -62,8 +62,6 @@ class TagihanSPPController extends Controller
                 'bukti_transfer' => 'required|file',
             ]);
 
-            $dateNow = Carbon::now();
-
             // Check if a file has been uploaded
             if ($request->hasFile('bukti_transfer')) {
 
@@ -71,7 +69,8 @@ class TagihanSPPController extends Controller
                 $siswaID = Siswa::where('user_id', $userID)->first();
 
                 // Convert the date format to match MySQL format
-                $tanggal_transfer = Carbon::parse($request->tanggal_transfer)->toDateString();
+                // $tanggal_transfer = Carbon::parse($request->tanggal_transfer)->toDateString();
+                $tanggal_transfer = Carbon::now();
 
                 // Fetch the data from the database
                 $kartuSpp = KartuSpp::where('setoran_untuk_bulan', $request->setoran_untuk_bulan)
@@ -86,8 +85,7 @@ class TagihanSPPController extends Controller
                 KartuSpp::where('setoran_untuk_bulan', $request->setoran_untuk_bulan)
                         ->where('id_siswa', $siswaID->id)
                         ->update([
-                            // 'tanggal_transfer' => $tanggal_transfer,
-                            'tanggal_transfer' => $dateNow,
+                            'tanggal_transfer' => $tanggal_transfer,
                             'nilai_setoran' => $request->nominal,
                             'status_setoran' => 'sudah ditransfer',
                             'jumlah_hari_terlambat' => $daysLate
@@ -95,8 +93,7 @@ class TagihanSPPController extends Controller
 
                 // Store the data in the database
                 $buktiPembayaran = SppPayment::create([
-                    // 'tanggal_transfer' => $tanggal_transfer,
-                    'tanggal_transfer' => $dateNow,
+                    'tanggal_transfer' => $tanggal_transfer,
                     'setoran_untuk_bulan' => $request->setoran_untuk_bulan,
                     'nilai_setoran' => $request->nominal,
                     'id_kartu_spp' => $kartuSpp->id,
