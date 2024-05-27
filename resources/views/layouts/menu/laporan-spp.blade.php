@@ -77,6 +77,25 @@
 
             <!-- Page Content -->
             <div class="card-body">
+                <table id="pendapatan-table" class="table table-bordered table-striped mb-4">
+                    <thead>
+                        <tr>
+                            <th>Pemasukan</th>
+                            <th>Belum Dibayar</th>
+                            <th>Sudah Dibayar</th>
+                            <th>Diterima Bendahara</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $totalNilaiSetoran }}</td>
+                            <td>{{ $countBelumBayar }}</td>
+                            <td>{{ $countSudahTransfer }}</td>
+                            <td>{{ $countDiterimaBendahara }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <table id="kartu-spp-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -231,7 +250,7 @@
                         var counter = 1;
 
                         // Iterate over each object in the response array
-                        response.forEach(function(kartuSpp) {
+                        response.kartuSpps.forEach(function(kartuSpp) {
                             // Extract relevant data from the object
                             var namaSiswa = kartuSpp.siswa ? kartuSpp.siswa.nama_lengkap || '' : '';
                             var kelasSiswa = kartuSpp.siswa ? kartuSpp.siswa.kelas || '' : '';
@@ -258,6 +277,14 @@
 
                             // Increment the counter
                             counter++;
+
+                            // Update the summary table
+                            $('#pendapatan-table tbody tr').html(
+                                '<td>' + (response.totalNilaiSetoran || 0) + '</td>' +
+                                '<td>' + (response.countBelumBayar || 0) + '</td>' +
+                                '<td>' + ((response.countSudahTransfer || 0)) + '</td>' +
+                                '<td>' + ((response.countDiterimaBendahara || 0)) + '</td>'
+                            );
                         });
                     },
                     error: function(xhr, status, error) {
