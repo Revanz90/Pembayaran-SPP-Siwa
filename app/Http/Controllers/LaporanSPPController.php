@@ -47,12 +47,29 @@ class LaporanSPPController extends Controller
         // Get the filtered results
         $kartuSpps = $query->get();
 
+         // Calculate the sum of nilai setoran
+        $totalNilaiSetoran = $kartuSpps->sum('nilai_setoran');
+
+        // Count the status
+        $countBelumBayar = $kartuSpps->where('status_setoran', 'belum dibayar')->count();
+        $countSudahTransfer = $kartuSpps->where('status_setoran', 'sudah ditransfer')->count();
+        $countDiterimaBendahara = $kartuSpps->where('status_setoran', 'diterima bendahara')->count();
+
+        // Prepare the response data
+        $response = [
+            'kartuSpps' => $kartuSpps,
+            'totalNilaiSetoran' => $totalNilaiSetoran,
+            'countBelumBayar' => $countBelumBayar,
+            'countSudahTransfer' => $countSudahTransfer,
+            'countDiterimaBendahara' => $countDiterimaBendahara,
+        ];
+
         // Return JSON response for AJAX requests
         if ($request->ajax()) {
-            return response()->json($kartuSpps);
+            return response()->json($response);
         } else {
             // Return view for non-AJAX requests
-            return view('layouts.menu.laporan-spp', ['kartuSpps' => $kartuSpps]);
+            return view('layouts.menu.laporan-spp',  $response);
         }
     }
     
