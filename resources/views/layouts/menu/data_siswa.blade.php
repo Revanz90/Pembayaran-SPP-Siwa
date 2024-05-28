@@ -64,7 +64,7 @@
                             <th>Jurusan</th>
                             <th>Tahun Masuk</th>
                             <th>Alamat</th>
-                            <!-- <th>Aksi</th> -->
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,14 +78,13 @@
                                 <td>{{ strtoupper($siswa->jurusan) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($siswa->tahun_masuk)->formatLocalized('%B %Y') }}</td>
                                 <td>{{ $siswa->alamat_siswa }}</td>
-                                <!-- <td>
+                                <td>
                                     <a class="btn btn-info btn-xs text-center d-flex flex-column align-items-stretch"
-                                        href="">
-                                        <i class="fas fa-folder">
-                                        </i>
-                                        Lihat
+                                        href="{{ route('index.update.datasiswa', ['id' => $siswa->id]) }}">
+                                        <i class="fas fa-edit"></i>
+                                        Ubah
                                     </a>
-                                </td> -->
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

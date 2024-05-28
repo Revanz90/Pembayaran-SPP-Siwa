@@ -49,6 +49,8 @@
                         <tr>
                             <th>No</th>
                             <!-- <th>Tanggal Transfer</th> -->
+                            <th>NISN</th>
+                            <th>Nama Siswa</th>
                             <th>Setoran Untuk Bulan</th>
                             <th>Jatuh Tempo</th>
                             <th>Keterlambatan SPP</th>
@@ -64,6 +66,8 @@
                                 <tr>
                                     <td>{{ $no++ }}</td>
                                     <!-- <td>{{ isset($kartu->tanggal_transfer) ? \Carbon\Carbon::parse($kartu->tanggal_transfer)->translatedFormat('d F Y') : '' }}</td> -->
+                                    <td>{{ $kartu->siswa->nisn}}</td>
+                                    <td>{{ $kartu->siswa->nama_lengkap}}</td>
                                     <td>{{ \Carbon\Carbon::parse($kartu->setoran_untuk_bulan)->formatLocalized('%d %B %Y') ?? '' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($kartu->tanggal_jatuh_tempo)->formatLocalized('%d %B %Y') ?? '' }}</td>
                                     <td>
