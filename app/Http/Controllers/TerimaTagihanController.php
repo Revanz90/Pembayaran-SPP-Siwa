@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class TerimaTagihanController extends Controller
 {
     public function index(){
-        $kartuspp = KartuSpp::whereIn('status_setoran', ['sudah ditransfer', 'diterima bendahara'])
+        $kartuspp = KartuSpp::with('siswa')->whereIn('status_setoran', ['sudah ditransfer', 'diterima bendahara'])
             ->orderBy('status_setoran', 'asc') // Sort by status_setoran in descending order
             ->orderBy('tanggal_transfer', 'desc') // Then sort by tanggal_transfer in ascending order
             ->get();

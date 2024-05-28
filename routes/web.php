@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/data_siswa', [DataSiswaController::class, 'index'])->name('datasiswa');
     Route::post('/data_siswa', [DataSiswaController::class, 'create'])->name('create.datasiswa');
+    Route::get('/data_siswa/{id}', [DataSiswaController::class, 'indexUpdate'])->name('index.update.datasiswa');
+    Route::post('/ubah_data_siswa', [DataSiswaController::class, 'update'])->name('update.datasiswa');
 
     Route::get('/kartu-spp', [KartuSPPController::class, 'index'])->name('kartu.spp');
     Route::post('/kartu-spp/{id}', [KartuSPPController::class, 'terbitkanKartuSPP'])->name('terbitkan.kartu.spp');
