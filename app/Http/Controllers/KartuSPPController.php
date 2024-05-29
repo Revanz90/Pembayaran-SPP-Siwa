@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\KartuSpp;
 use App\Models\Siswa;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -97,6 +98,7 @@ class KartuSPPController extends Controller
 
             $startDate = now()->startOfYear()->addMonths(6);
             $currentDate = $startDate->copy();
+            $dateNow = Carbon::now();
 
             // Check if a bill for this month already exists for the student
             $existingKartuSPP = KartuSpp::where('id_siswa', $siswa->id)
@@ -112,7 +114,7 @@ class KartuSPPController extends Controller
                 // $pdf->setPaper('A4', 'landscape');
 
                 // Render the view with the student data
-                $pdf = PDF::loadView('pdf.kartu-spp', compact('siswa', 'kartuspp', 'existingKartuSPP'));
+                $pdf = PDF::loadView('pdf.kartu-spp', compact('siswa', 'kartuspp', 'existingKartuSPP', 'dateNow'));
 
                 // Return the PDF as a download
                 return $pdf->download('Kartu SPP ' . $siswa->nama_lengkap . '.pdf');

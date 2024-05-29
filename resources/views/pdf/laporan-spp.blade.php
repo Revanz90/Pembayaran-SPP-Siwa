@@ -128,7 +128,7 @@
             <p>
                 <strong> Laporan SPP 
                 <br> 
-                {{ \Carbon\Carbon::parse($startDate)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($endDate)->translatedFormat('d F Y') }}
+                {{ \Carbon\Carbon::parse($startDateFilter)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($endDateFilter)->translatedFormat('d F Y') }}
                 </strong>
             </p>
         </div>
@@ -141,7 +141,26 @@
     
     <!-- Table Content -->
     <div class="table-container">
-        <table id="examplePolos" class="table table-bordered table-striped">
+        <table id="pendapatan-table" class="table table-bordered table-striped mb-4">
+            <thead>
+                <tr>
+                    <th>Pemasukan</th>
+                    <th>Belum Dibayar</th>
+                    <th>Sudah Dibayar</th>
+                    <th>Diterima Bendahara</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $totalNilaiSetoran }}</td>
+                    <td>{{ $countBelumBayar }}</td>
+                    <td>{{ $countSudahTransfer }}</td>
+                    <td>{{ $countDiterimaBendahara }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="dataSPP" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>NISN</th>
@@ -175,7 +194,7 @@
     <!-- Signature -->
     <div class="signature">
         <div class="signature-content">
-            <p><strong>Berbah, 01 Juli 2023</strong></p>
+            <p><strong>Berbah, {{ \Carbon\Carbon::parse($dateNow)->translatedFormat('d F Y') }}</strong></p>
             <p><strong>Kepala Sekolah,</strong></p>
             <br><br><br>
             <p><strong>SINGGIH WIRATMA,SH.</strong></p>

@@ -191,7 +191,7 @@
     <!-- Signature -->
     <div class="signature">
         <div class="signature-content">
-            <p><strong>Berbah, 01 Juli 2023</strong></p>
+            <p><strong>Berbah, {{ \Carbon\Carbon::parse($dateNow)->translatedFormat('d F Y') }}</strong></p>
             <p><strong>Kepala Sekolah,</strong></p>
             <br><br><br>
             <p><strong>SINGGIH WIRATMA,SH.</strong></p>

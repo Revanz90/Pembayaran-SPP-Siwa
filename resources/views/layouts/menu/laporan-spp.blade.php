@@ -217,7 +217,7 @@
                 fetchFilteredData();
             });
 
-            function fetchFilteredData(){
+            function getFilteredData() {
                 var dateRange = $('#date-range').val().split(' - ');
                 var startDate = dateRange[0] ? moment(dateRange[0], 'DD-MM-YYYY').format('YYYY-MM-DD') : null;
                 var endDate = dateRange[1] ? moment(dateRange[1], 'DD-MM-YYYY').format('YYYY-MM-DD') : null;
@@ -233,6 +233,12 @@
                 if (jurusan) data.jurusan = jurusan;
                 if (kelasSiswa) data.kelas = kelasSiswa;
                 if (statusPembayaran) data.status = statusPembayaran;
+
+                return data;
+            }
+
+            function fetchFilteredData(){
+                var data = getFilteredData();
 
                 // Send the data to the controller via AJAX
                 $.ajax({
@@ -298,12 +304,10 @@
             $('#download-laporan-pdf').click(function(e) {
                 e.preventDefault(); // Prevent the default action of the link
                 
-                // Get the start and end dates from the date range picker
-                var startDate = $('#date-range').data('daterangepicker').startDate.format('DD-MM-YYYY');
-                var endDate = $('#date-range').data('daterangepicker').endDate.format('DD-MM-YYYY');
+                var data = getFilteredData();
 
-                // Generate the URL with the start and end dates
-                var url = "{{ route('cetak.laporan.spp.pdf') }}?start_date=" + startDate + "&end_date=" + endDate;
+                // Generate the URL with the query parameters
+                var url = "{{ route('cetak.laporan.spp.pdf') }}?" + $.param(data);
 
                 // Redirect the user to the generated URL
                 window.location.href = url;
